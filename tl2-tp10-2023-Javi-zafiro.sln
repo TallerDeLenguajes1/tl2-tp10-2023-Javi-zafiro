@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tl2-tp10-2023-Javi-zafiro", "tl2-tp10-2023-Javi-zafiro.csproj", "{15002834-FB44-4D56-9749-93EB1C0D9991}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15002834-FB44-4D56-9749-93EB1C0D9991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15002834-FB44-4D56-9749-93EB1C0D9991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15002834-FB44-4D56-9749-93EB1C0D9991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15002834-FB44-4D56-9749-93EB1C0D9991}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D10FD715-5911-4E3F-992B-F8F7A2FA3666}
+	EndGlobalSection
+EndGlobal

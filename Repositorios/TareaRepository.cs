@@ -140,4 +140,29 @@ public class TareaRepository : ITareaRepository
             connection.Close();
         }
     }
+    public List<tarea> ListarTodasTareas(){
+        var query="SELECT * FROM tarea;";
+        List<tarea> listaDeTareasXUsuario = new List<tarea>();
+        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        {
+            connection.Open();
+            var command= new SQLiteCommand(query, connection);
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while(reader.Read()){
+                    var tar = new tarea();
+                    tar.Id = Convert.ToInt32(reader["id"]);
+                    tar.IdTablero=Convert.ToInt32(reader["id_tablero"]);
+                    tar.Nombre=reader["nombre"].ToString();
+                    tar.Descripcion=reader["descripcion"].ToString();
+                    tar.Color =reader["color"].ToString();
+                    tar.Estado=(EstadoTarea)Enum.Parse(typeof(EstadoTarea), reader["estado"].ToString());
+                    tar.Usuario_asignado=Convert.ToInt32(reader["id_usuario_asignado"]);
+                    listaDeTareasXUsuario.Add(tar);
+                }
+            }
+            connection.Close();
+        }
+        return (listaDeTareasXUsuario);
+    }
 }

@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alumno\\Documents\\repositorios\\tl2-tp10-2023-Javi-zafiro\\tl2-tp10-2023-Javi-zafiro.csproj": {}
+    "C:\\Users\\Javier\\OneDrive\\Documentos\\2023\\taller\\tl2-tp10-2023-Javi-zafiro\\tl2-tp10-2023-Javi-zafiro.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alumno\\Documents\\repositorios\\tl2-tp10-2023-Javi-zafiro\\tl2-tp10-2023-Javi-zafiro.csproj": {
+    "C:\\Users\\Javier\\OneDrive\\Documentos\\2023\\taller\\tl2-tp10-2023-Javi-zafiro\\tl2-tp10-2023-Javi-zafiro.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alumno\\Documents\\repositorios\\tl2-tp10-2023-Javi-zafiro\\tl2-tp10-2023-Javi-zafiro.csproj",
+        "projectUniqueName": "C:\\Users\\Javier\\OneDrive\\Documentos\\2023\\taller\\tl2-tp10-2023-Javi-zafiro\\tl2-tp10-2023-Javi-zafiro.csproj",
         "projectName": "tl2-tp10-2023-Javi-zafiro",
-        "projectPath": "C:\\Users\\Alumno\\Documents\\repositorios\\tl2-tp10-2023-Javi-zafiro\\tl2-tp10-2023-Javi-zafiro.csproj",
-        "packagesPath": "C:\\Users\\Alumno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alumno\\Documents\\repositorios\\tl2-tp10-2023-Javi-zafiro\\obj\\",
+        "projectPath": "C:\\Users\\Javier\\OneDrive\\Documentos\\2023\\taller\\tl2-tp10-2023-Javi-zafiro\\tl2-tp10-2023-Javi-zafiro.csproj",
+        "packagesPath": "C:\\Users\\Javier\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Javier\\OneDrive\\Documentos\\2023\\taller\\tl2-tp10-2023-Javi-zafiro\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Alumno\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Javier\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,6 +37,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "System.Data.SQLite": {
+              "target": "Package",
+              "version": "[1.0.118, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -59,7 +62,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
