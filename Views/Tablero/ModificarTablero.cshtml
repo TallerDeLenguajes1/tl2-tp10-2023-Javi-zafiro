@@ -1,0 +1,18 @@
+@model tablero
+
+<h3>Modificar Tablero</h3>
+
+<div>
+    <p>desea modificar este tablero: @Model.Nombre, @Model.Descripcion ?</p>
+</div>
+<form asp-controller="Tablero" asp-action="Modifica">
+    <input asp-for="Id" type="hidden">
+    <label asp-for="IdUsuariPropietario"></label>
+    <input asp-for="@Model.IdUsuariPropietario" />
+    <label asp-for="Nombre"></label>
+    <input asp-for="@Model.Nombre" />
+    <label asp-for="Descripcion"></label>
+    <input asp-for="@Model.Descripcion" />
+    <button type="submit" class="btn btn-primary" onclick="return confirm('estas seguro de cambiar este usuario?')">Actualizar</button>
+    <a asp-controller="Tablero" asp-action="ListarTableros" class="btn btn-primary">Cancelar</a>
+</form>

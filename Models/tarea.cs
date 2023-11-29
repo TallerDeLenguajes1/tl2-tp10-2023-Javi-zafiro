@@ -1,4 +1,4 @@
-namespace modelosParaKamba;
+namespace tl2_tp10_2023_Javi_zafiro.Models;
  
 
  enum EstadoTarea

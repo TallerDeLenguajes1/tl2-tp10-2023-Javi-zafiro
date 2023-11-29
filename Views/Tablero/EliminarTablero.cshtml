@@ -1,0 +1,12 @@
+@model tablero
+
+<h3>Eliminar Tablero</h3>
+
+<div>
+    <p>esta seguro que desea eliminar el tablero @Model.Nombre ?</p>
+</div>
+<form asp-controller="Tablero" asp-action="Elimina">
+    <input asp-for="Id" type="hidden">
+    <button type="submit" class="btn btn-danger" onclick="return confirm('estas seguro de querer borrar al tablero @Model.Nombre?')">Borrar</button>
+    <a asp-controller="Tablero" asp-action="ListarTableros" class="btn btn-primary">Cancelar</a>
+</form>

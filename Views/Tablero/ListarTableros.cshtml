@@ -1,0 +1,28 @@
+@model List<tablero>
+<H3>Listado de Tableros</H3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Id Del Propietario</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tab in Model)
+        {
+            <tr>
+                <th scope="row">@tab.Id</th>
+                <td>@tab.IdUsuariPropietario</td>
+                <td>@tab.Nombre</td>
+                <td>@tab.Descripcion</td>
+                <td>
+                    <a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-id="@tab.Id">Editar</a>
+                    <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-id="@tab.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

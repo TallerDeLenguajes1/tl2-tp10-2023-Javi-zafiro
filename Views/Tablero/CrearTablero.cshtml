@@ -1,0 +1,11 @@
+@model tablero
+<form asp-controller="Tablero" asp-action="CrearTablero">
+    <label asp-for="IdUsuariPropietario"></label>
+    <input asp-for="IdUsuariPropietario" />
+    <label asp-for="Nombre"></label>
+    <input asp-for="Nombre" />
+    <label asp-for="Descripcion"></label>
+    <input asp-for="Descripcion" />
+    <button type="submit" class="btn btn-success"
+        onclick="return confirm('¿Estás seguro de crear el usuario?')">Agregar</button>
+</form>

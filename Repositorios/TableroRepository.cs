@@ -1,4 +1,4 @@
-using modelosParaKamba;
+using tl2_tp10_2023_Javi_zafiro.Models;
 using System.Data.SQLite;
 
 namespace repositorioParaKamba;
@@ -25,7 +25,7 @@ public class TableroRepository : ITableroRepository
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@id_usuario_asignado", tab.IdUsuariPropietario));
+            command.Parameters.Add(new SQLiteParameter("@idusu", tab.IdUsuariPropietario));
             command.Parameters.Add(new SQLiteParameter("@nombre", tab.Nombre));
             command.Parameters.Add(new SQLiteParameter("@descripcion", tab.Descripcion));
             command.Parameters.Add(new SQLiteParameter("@idtablero", idTablero));

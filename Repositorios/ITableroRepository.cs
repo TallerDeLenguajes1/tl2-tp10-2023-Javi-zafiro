@@ -1,4 +1,4 @@
-using modelosParaKamba;
+using tl2_tp10_2023_Javi_zafiro.Models;
 namespace repositorioParaKamba;
 
 public interface ITableroRepository

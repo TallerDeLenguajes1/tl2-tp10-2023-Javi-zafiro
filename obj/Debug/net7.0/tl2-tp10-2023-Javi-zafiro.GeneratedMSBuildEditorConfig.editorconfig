@@ -32,12 +32,44 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Tablero/CrearTablero.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xDcmVhclRhYmxlcm8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Tablero/EliminarTablero.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xFbGltaW5hclRhYmxlcm8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Tablero/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Tablero/ListarTableros.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xMaXN0YXJUYWJsZXJvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Tablero/ModificarTablero.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xNb2RpZmljYXJUYWJsZXJvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Usuario/CrearUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xDcmVhclVzdWFyaW8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Usuario/EliminarUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xFbGltaW5hclVzdWFyaW8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Usuario/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Usuario/ListarUsuarios.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xMaXN0YXJVc3Vhcmlvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/Usuario/ModificarUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xNb2RpZmljYXJVc3VhcmlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Javier/OneDrive/Documentos/2023/taller/tl2-tp10-2023-Javi-zafiro/Views/_ViewImports.cshtml]
