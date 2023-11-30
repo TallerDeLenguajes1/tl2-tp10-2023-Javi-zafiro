@@ -72,8 +72,8 @@ public class TableroController : Controller
     }
 
     [HttpPost]
-    public IActionResult Elimina(usuario usu){
-        tableroRepositorio.BorrarTablero(usu.Id);
+    public IActionResult Elimina(tablero tab){
+        tableroRepositorio.BorrarTablero(tab.Id);
         return RedirectToAction("ListarTableros");
     }
 }

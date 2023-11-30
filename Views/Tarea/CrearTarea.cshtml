@@ -1,0 +1,19 @@
+@model tarea
+<form asp-controller="Tarea" asp-action="CrearTarea">
+    <label asp-for="Nombre"></label>
+    <input asp-for="Nombre" />
+    <label asp-for="Descripcion"></label>
+    <input asp-for="Descripcion" />
+    <label asp-for="Color"></label>
+    <input asp-for="Color" />
+    <label asp-for="Estado"></label>
+    <select asp-for="Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
+        <option value="">Seleccione un estado</option>
+    </select>
+    <label asp-for="Usuario_asignado"></label>
+    <input asp-for="Usuario_asignado" />
+    <label asp-for="IdTablero"></label>
+    <input asp-for="IdTablero" />
+    <button type="submit" class="btn btn-success"
+        onclick="return confirm('¿Estás seguro de crear esta tarea?')">Agregar</button>
+</form>

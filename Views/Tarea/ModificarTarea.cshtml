@@ -1,0 +1,26 @@
+@model tarea
+
+<h3>Modificar Tarea</h3>
+
+<div>
+    <p>desea modificar esta tarea: @Model.Nombre, @Model.Descripcion ?</p>
+</div>
+<form asp-controller="Tarea" asp-action="Modifica">
+    <input asp-for="Id" type="hidden">
+    <label asp-for="Nombre"></label>
+    <input asp-for="@Model.Nombre" />
+    <label asp-for="Descripcion"></label>
+    <input asp-for="@Model.Descripcion" />
+    <label asp-for="Color"></label>
+    <input asp-for="@Model.Color" />
+    <label asp-for="Estado"></label>
+    <select asp-for="@Model.Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
+        <option value="">Seleccione un estado</option>
+    </select>
+    <label asp-for="Usuario_asignado"></label>
+    <input asp-for="@Model.Usuario_asignado" />
+    <label asp-for="IdTablero"></label>
+    <input asp-for="@Model.IdTablero" />
+    <button type="submit" class="btn btn-primary" onclick="return confirm('estas seguro de cambiar esta tarea?')">Actualizar</button>
+    <a asp-controller="Tarea" asp-action="ListarTareas" class="btn btn-primary">Cancelar</a>
+</form>

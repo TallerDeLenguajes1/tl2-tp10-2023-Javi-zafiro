@@ -1,13 +1,13 @@
 namespace tl2_tp10_2023_Javi_zafiro.Models;
  
 
- enum EstadoTarea
+ public enum EstadoTarea
  {
-    Ideas,
-    ToDo,
-    Doing,
-    Review,
-    Done
+    Ideas=1,
+    ToDo=2,
+    Doing=3,
+    Review=4,
+    Done=5
  }
 public class tarea
 {
@@ -25,5 +25,5 @@ public class tarea
     public string Color { get => color; set => color = value; }
     public int? Usuario_asignado { get => usuario_asignado; set => usuario_asignado = value; }
     public int IdTablero { get => idTablero; set => idTablero = value; }
-    internal EstadoTarea Estado { get => estado; set => estado = value; }
+    public EstadoTarea Estado { get => estado; set => estado = value; }
 }

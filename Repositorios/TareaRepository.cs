@@ -15,7 +15,7 @@ public class TareaRepository : ITareaRepository
             var command= new SQLiteCommand(query, connection);
             command.Parameters.Add(new SQLiteParameter("@idtab", tar.IdTablero));
             command.Parameters.Add(new SQLiteParameter("@nombre", tar.Nombre));
-            command.Parameters.Add(new SQLiteParameter("@estado", tar.Estado));
+            command.Parameters.Add(new SQLiteParameter("@estado", (int)tar.Estado));
             command.Parameters.Add(new SQLiteParameter("@descripcion", tar.Descripcion));
             command.Parameters.Add(new SQLiteParameter("@color", tar.Color));
             command.Parameters.Add(new SQLiteParameter("@idusu", tar.Usuario_asignado));
@@ -33,7 +33,7 @@ public class TareaRepository : ITareaRepository
             command.Parameters.Add(new SQLiteParameter("@idtar", idTarea));
             command.Parameters.Add(new SQLiteParameter("@idtab", tar.IdTablero));
             command.Parameters.Add(new SQLiteParameter("@nombre", tar.Nombre));
-            command.Parameters.Add(new SQLiteParameter("@estado", tar.Estado));
+            command.Parameters.Add(new SQLiteParameter("@estado", (int)tar.Estado));
             command.Parameters.Add(new SQLiteParameter("@descripcion", tar.Descripcion));
             command.Parameters.Add(new SQLiteParameter("@color", tar.Color));
             command.Parameters.Add(new SQLiteParameter("@idusu", tar.Usuario_asignado));
