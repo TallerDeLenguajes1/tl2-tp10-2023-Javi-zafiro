@@ -6,6 +6,7 @@
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Nombre</th>
+            <th scope="col">Tipo</th>
             <th></th>
         </tr>
     </thead>
@@ -15,6 +16,7 @@
             <tr>
                 <th scope="row">@usu.Id</th>
                 <td>@usu.NombreDeUsuario</td>
+                <td>@usu.Tipo</td>
                 <td>
                     <a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-id="@usu.Id">Editar</a>
                     <a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-id="@usu.Id">Eliminar</a>

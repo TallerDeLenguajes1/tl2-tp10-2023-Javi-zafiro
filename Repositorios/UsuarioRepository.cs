@@ -8,23 +8,26 @@ public class UsuarioRepository : IUsuarioRepository
     private string cadenaConexion="Data Source=DB/kamba.db;Cache=Shared";
 
     public void CrearUsuario(usuario usu){
-        var query = "INSERT INTO usuario (nombre) VALUES (@nombre);";
+        var query = "INSERT INTO usuario (nombre, tipo, contrasenia) VALUES (@nombre, @tipo, @contrasenia);";
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
             command.Parameters.Add(new SQLiteParameter("@nombre", usu.NombreDeUsuario));
+            command.Parameters.Add(new SQLiteParameter("@tipo", (int)usu.Tipo));
+            command.Parameters.Add(new SQLiteParameter("@contrasenia", usu.Contrasenia));
             command.ExecuteNonQuery();
             connection.Close();
         }
     }
     public void ModificarUsuario(int idUsuario, usuario usu){
-        var query = "UPDATE usuario SET nombre = @nombre WHERE id = @idusu;";
+        var query = "UPDATE usuario SET nombre = @nombre, tipo = @tipo WHERE id = @idusu;";
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
             command.Parameters.Add(new SQLiteParameter("@nombre", usu.NombreDeUsuario));
+            command.Parameters.Add(new SQLiteParameter("@tipo", (int)usu.Tipo));
             command.Parameters.Add(new SQLiteParameter("@idusu", idUsuario));
             command.ExecuteNonQuery();
             connection.Close();
@@ -43,6 +46,7 @@ public class UsuarioRepository : IUsuarioRepository
                     var usu = new usuario();
                     usu.Id= Convert.ToInt32(reader["id"]);
                     usu.NombreDeUsuario=reader["nombre"].ToString();
+                    usu.Tipo=(TiposUsuario)Enum.Parse(typeof(TiposUsuario), reader["tipo"].ToString());
                     listaDeUsuarios.Add(usu);
                 }
             }
@@ -63,6 +67,7 @@ public class UsuarioRepository : IUsuarioRepository
                 while(reader.Read()){
                     usu.Id=Convert.ToInt32(reader["id"]);
                     usu.NombreDeUsuario=reader["nombre"].ToString();
+                    usu.Tipo=(TiposUsuario)Enum.Parse(typeof(TiposUsuario), reader["tipo"].ToString());
                 }
             }
             connection.Close();
