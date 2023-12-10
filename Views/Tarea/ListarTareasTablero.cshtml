@@ -1,0 +1,29 @@
+@model List<tarea>
+<H3>Listado de Tareas</H3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Color</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Id Del Usuario Asignado</th>
+            <th scope="col">Id del Tablero</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tar in Model)
+        {
+            <tr>
+                <th scope="row">@tar.Id</th>
+                <td>@tar.Nombre</td>
+                <td>@tar.Descripcion</td>
+                <td>@tar.Color</td>
+                <td>@tar.Estado</td>
+                <td>@tar.Usuario_asignado</td>
+                <td>@tar.IdTablero</td>
+            </tr>
+        }
+    </tbody>
+</table>

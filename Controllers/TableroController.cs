@@ -21,18 +21,35 @@ public class TableroController : Controller
     [HttpGet]
     public IActionResult ListarTableros()
     {
-        var lista= tableroRepositorio.ListarTableros();
-        return View(lista);
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))){
+            return RedirectToRoute(new{controller= "Login", action="index"});
+        }else
+        {
+            List<tablero> lista;
+            if (HttpContext.Session.GetString("rol")==TiposUsuario.Administrador.ToString())
+            {
+                lista= tableroRepositorio.ListarTableros();
+            }else
+            {
+                int idusu;
+                var id=HttpContext.Session.GetString("id");
+                int.TryParse(id, out idusu);
+                lista = tableroRepositorio.ListarTablerosDeUsuario(idusu);
+            }
+            return View(lista);
+        }
     }
 
     [HttpGet]
     public IActionResult CrearTablero()
     {
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         return View(new tablero());
     }
     [HttpPost]
     public IActionResult CrearTablero(tablero tab)
     {
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         if (ModelState.IsValid)
         {
             tableroRepositorio.CrearTablero(tab);
@@ -43,6 +60,7 @@ public class TableroController : Controller
     [HttpGet]
     public IActionResult ModificarTablero(int id)
     {
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         var tablero = tableroRepositorio.ObtenerTablero(id);
         if (tablero!=null)
         {
@@ -53,6 +71,7 @@ public class TableroController : Controller
 
     [HttpPost]
     public IActionResult Modifica(tablero tab){
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         if (ModelState.IsValid)
         {
             tableroRepositorio.ModificarTablero(tab.Id, tab);
@@ -63,6 +82,7 @@ public class TableroController : Controller
     [HttpGet]
     public IActionResult EliminarTablero(int id)
     {
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         var tablero = tableroRepositorio.ObtenerTablero(id);
         if (tablero!=null)
         {
@@ -73,6 +93,7 @@ public class TableroController : Controller
 
     [HttpPost]
     public IActionResult Elimina(tablero tab){
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         tableroRepositorio.BorrarTablero(tab.Id);
         return RedirectToAction("ListarTableros");
     }

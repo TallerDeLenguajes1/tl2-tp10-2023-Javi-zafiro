@@ -74,6 +74,28 @@ public class UsuarioRepository : IUsuarioRepository
         }
         return(usu);
     }
+
+    public usuario ObtenerUsuarioLogin(string nombre, string contrasenia){
+        var usu = new usuario();
+        var query="SELECT * FROM usuario WHERE nombre= @nombre AND contrasenia=@contra;";
+        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        {
+            connection.Open();
+            var command= new SQLiteCommand(query, connection);
+            command.Parameters.Add(new SQLiteParameter("@nombre", nombre));
+            command.Parameters.Add(new SQLiteParameter("@contra", contrasenia));
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while(reader.Read()){
+                    usu.Id=Convert.ToInt32(reader["id"]);
+                    usu.NombreDeUsuario=reader["nombre"].ToString();
+                    usu.Tipo=(TiposUsuario)Enum.Parse(typeof(TiposUsuario), reader["tipo"].ToString());
+                }
+            }
+            connection.Close();
+        }
+        return(usu);
+    }
     public void BorrarUsuario(int idUsuario){
         var query="DELETE FROM usuario WHERE id=@idusu;";
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
