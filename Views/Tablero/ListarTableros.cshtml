@@ -1,4 +1,4 @@
-@model List<tablero>
+@model ListaTodosTablerosViewModel
 <H3>Listado de Tableros</H3>
 <table class="table">
     <thead>
@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var tab in Model)
+        @foreach (var tab in Model.ListaTab)
         {
             <tr>
                 <th scope="row">@tab.Id</th>

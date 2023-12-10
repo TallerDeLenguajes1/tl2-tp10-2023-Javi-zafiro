@@ -1,4 +1,4 @@
-@model List<usuario>
+@model ListaUsuariosViewModel
     
 <h3>Listado de Usuarios</h3>
 <table class="table">
@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var usu in Model)
+        @foreach (var usu in Model.ListaUsuariosVM)
         {
             <tr>
                 <th scope="row">@usu.Id</th>

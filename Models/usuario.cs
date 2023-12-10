@@ -1,4 +1,5 @@
 namespace tl2_tp10_2023_Javi_zafiro.Models;
+using tl2_tp10_2023_Javi_zafiro.ViewModels;
 
 public enum TiposUsuario
 {
@@ -17,4 +18,13 @@ public class usuario
     public int Id { get => id; set => id = value; }
     public TiposUsuario Tipo { get => tipo; set => tipo = value; }
     public string Contrasenia { get => contrasenia; set => contrasenia = value; }
+
+    public usuario(UsuarioViewModel usuario){
+        this.id = usuario.Id;
+        this.nombreDeUsuario = usuario.NombreDeUsuario;
+        this.contrasenia = usuario.Contrasenia;
+        this.tipo = usuario.Tipo;
+    }
+
+    public usuario(){}
 }

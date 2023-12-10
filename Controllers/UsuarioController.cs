@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_Javi_zafiro.Models;
+using tl2_tp10_2023_Javi_zafiro.ViewModels;
 using repositorioParaKamba;
 
 namespace tl2_tp10_2023_Javi_zafiro.Controllers;
@@ -8,9 +9,11 @@ namespace tl2_tp10_2023_Javi_zafiro.Controllers;
 public class UsuarioController : Controller
 {
     private readonly UsuarioRepository usuarioRepositorio;
+    private readonly ILogger<UsuarioController> _logger;
 
-    public UsuarioController()
+    public UsuarioController(ILogger<UsuarioController> logger)
     {
+        _logger = logger;
         usuarioRepositorio = new UsuarioRepository();
     }
 
@@ -22,8 +25,17 @@ public class UsuarioController : Controller
     public IActionResult ListarUsuarios()
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
-        var lista= usuarioRepositorio.ListarUsuarios();
-        return View(lista);
+        try
+        {
+            var lista= usuarioRepositorio.ListarUsuarios();
+            return View(new ListaUsuariosViewModel(lista));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+        
     }
 
     [HttpGet]
@@ -31,17 +43,27 @@ public class UsuarioController : Controller
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
-        return View(new usuario());
+        return View(new UsuarioViewModel());
     }
     [HttpPost]
-    public IActionResult CrearUsuario(usuario usu)
+    public IActionResult CrearUsuario(UsuarioViewModel usu)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
         if (ModelState.IsValid)
         {
-            usuarioRepositorio.CrearUsuario(usu);
-            return RedirectToAction("ListarUsuarios");
+            var nuevo = new usuario(usu);
+            try
+            {
+                usuarioRepositorio.CrearUsuario(nuevo);
+                return RedirectToAction("ListarUsuarios");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }
+            
         }
         return View(usu) ;
     }
@@ -50,22 +72,36 @@ public class UsuarioController : Controller
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
-        var usuario = usuarioRepositorio.ObtenerUsuario(id);
-        if (usuario!=null)
+        try
         {
-            return View(usuario);
+            var usuario = usuarioRepositorio.ObtenerUsuario(id);
+            return View(new UsuarioViewModel(usuario));
         }
-        return NotFound();
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+        
     }
 
     [HttpPost]
-    public IActionResult Modifica(usuario usu){
+    public IActionResult Modifica(UsuarioViewModel usu){
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
         if (ModelState.IsValid)
         {
-            usuarioRepositorio.ModificarUsuario(usu.Id, usu);
-            return RedirectToAction("ListarUsuarios");
+            try
+            {
+                usuarioRepositorio.ModificarUsuario(usu.Id, new usuario(usu));
+                return RedirectToAction("ListarUsuarios");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }
+            
         }
         return View(usu);
     }
@@ -74,19 +110,35 @@ public class UsuarioController : Controller
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
-        var usuario = usuarioRepositorio.ObtenerUsuario(id);
-        if (usuario!=null)
+        try
         {
-            return View(usuario);
+            var usuario = usuarioRepositorio.ObtenerUsuario(id);
+            return View(new UsuarioViewModel(usuario));
         }
-        return NotFound();
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
 
     [HttpPost]
-    public IActionResult Elimina(usuario usu){
+    public IActionResult Elimina(UsuarioViewModel usu){
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
-        usuarioRepositorio.BorrarUsuario(usu.Id);
-        return RedirectToAction("ListarUsuarios");
+        try
+        {
+            usuarioRepositorio.BorrarUsuario(usu.Id);
+            return RedirectToAction("ListarUsuarios");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+    }
+
+    public IActionResult Error(){
+        return View(new ErrorViewModel());
     }
 }

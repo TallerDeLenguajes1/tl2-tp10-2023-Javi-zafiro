@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_Javi_zafiro.Models;
+using tl2_tp10_2023_Javi_zafiro.ViewModels;
 using repositorioParaKamba;
 
 namespace tl2_tp10_2023_Javi_zafiro.Controllers;
@@ -8,9 +9,11 @@ namespace tl2_tp10_2023_Javi_zafiro.Controllers;
 public class TableroController : Controller
 {
     private readonly TableroRepository tableroRepositorio;
+    private readonly ILogger<UsuarioController> _logger;
 
-    public TableroController()
+    public TableroController(ILogger<UsuarioController> logger)
     {
+        _logger = logger;
         tableroRepositorio = new TableroRepository();
     }
 
@@ -21,39 +24,64 @@ public class TableroController : Controller
     [HttpGet]
     public IActionResult ListarTableros()
     {
-        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))){
-            return RedirectToRoute(new{controller= "Login", action="index"});
-        }else
+        try
         {
-            List<tablero> lista;
-            if (HttpContext.Session.GetString("rol")==TiposUsuario.Administrador.ToString())
-            {
-                lista= tableroRepositorio.ListarTableros();
+            if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))){
+                return RedirectToRoute(new{controller= "Login", action="index"});
             }else
             {
-                int idusu;
-                var id=HttpContext.Session.GetString("id");
-                int.TryParse(id, out idusu);
-                lista = tableroRepositorio.ListarTablerosDeUsuario(idusu);
+                List<tablero> lista;
+                if (HttpContext.Session.GetString("rol")==TiposUsuario.Administrador.ToString())
+                {
+                    lista= tableroRepositorio.ListarTableros();
+                }else
+                {
+                    int idusu;
+                    var id=HttpContext.Session.GetString("id");
+                    int.TryParse(id, out idusu);
+                    lista = tableroRepositorio.ListarTablerosDeUsuario(idusu);
+                }
+                return View(new ListaTodosTablerosViewModel(lista));
             }
-            return View(lista);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
         }
     }
 
     [HttpGet]
     public IActionResult CrearTablero()
     {
-        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        return View(new tablero());
+        try
+        {
+            if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
+            return View(new TableroViewModel());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+        
     }
     [HttpPost]
-    public IActionResult CrearTablero(tablero tab)
+    public IActionResult CrearTablero(TableroViewModel tab)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         if (ModelState.IsValid)
         {
-            tableroRepositorio.CrearTablero(tab);
-            return RedirectToAction("ListarTableros");
+            try
+            {
+                tableroRepositorio.CrearTablero(new tablero(tab));
+                return RedirectToAction("ListarTableros");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }
         }
         return View(tab) ;
     }
@@ -61,21 +89,33 @@ public class TableroController : Controller
     public IActionResult ModificarTablero(int id)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        var tablero = tableroRepositorio.ObtenerTablero(id);
-        if (tablero!=null)
+        try
         {
-            return View(tablero);
+            var tablero = tableroRepositorio.ObtenerTablero(id);
+            return View(new TableroViewModel(tablero));
         }
-        return NotFound();
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
 
     [HttpPost]
-    public IActionResult Modifica(tablero tab){
+    public IActionResult Modifica(TableroViewModel tab){
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         if (ModelState.IsValid)
         {
-            tableroRepositorio.ModificarTablero(tab.Id, tab);
-            return RedirectToAction("ListarTableros");
+            try
+            {
+                tableroRepositorio.ModificarTablero(tab.Id, new tablero(tab));
+                return RedirectToAction("ListarTableros");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }
         }
         return View(tab);
     }
@@ -83,18 +123,42 @@ public class TableroController : Controller
     public IActionResult EliminarTablero(int id)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        var tablero = tableroRepositorio.ObtenerTablero(id);
-        if (tablero!=null)
+        try
         {
-            return View(tablero);
+            var tablero = tableroRepositorio.ObtenerTablero(id);
+            return View(new TableroViewModel(tablero));
         }
-        return NotFound();
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
 
     [HttpPost]
-    public IActionResult Elimina(tablero tab){
+    public IActionResult Elimina(TableroViewModel tab){
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        tableroRepositorio.BorrarTablero(tab.Id);
-        return RedirectToAction("ListarTableros");
+        try
+        {
+            tableroRepositorio.BorrarTablero(tab.Id);
+            return RedirectToAction("ListarTableros");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
 }
+
+/*
+try
+{
+    
+}
+catch (Exception ex)
+{
+    _logger.LogError(ex.ToString());
+    return RedirectToAction("Error");
+}
+*/
