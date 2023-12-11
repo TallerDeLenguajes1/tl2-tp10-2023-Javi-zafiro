@@ -8,13 +8,13 @@ namespace tl2_tp10_2023_Javi_zafiro.Controllers;
 
 public class UsuarioController : Controller
 {
-    private readonly UsuarioRepository usuarioRepositorio;
+    private readonly IUsuarioRepository _usuarioRepositorio;
     private readonly ILogger<UsuarioController> _logger;
 
-    public UsuarioController(ILogger<UsuarioController> logger)
+    public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepositorio)
     {
         _logger = logger;
-        usuarioRepositorio = new UsuarioRepository();
+        _usuarioRepositorio = usuarioRepositorio;
     }
 
     public IActionResult Index()
@@ -27,7 +27,7 @@ public class UsuarioController : Controller
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         try
         {
-            var lista= usuarioRepositorio.ListarUsuarios();
+            var lista= _usuarioRepositorio.ListarUsuarios();
             return View(new ListaUsuariosViewModel(lista));
         }
         catch (Exception ex)
@@ -55,7 +55,7 @@ public class UsuarioController : Controller
             var nuevo = new usuario(usu);
             try
             {
-                usuarioRepositorio.CrearUsuario(nuevo);
+                _usuarioRepositorio.CrearUsuario(nuevo);
                 return RedirectToAction("ListarUsuarios");
             }
             catch (Exception ex)
@@ -74,8 +74,13 @@ public class UsuarioController : Controller
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
         try
         {
-            var usuario = usuarioRepositorio.ObtenerUsuario(id);
-            return View(new UsuarioViewModel(usuario));
+            var usu = _usuarioRepositorio.ObtenerUsuario(id);
+            var usuVM= new UsuarioViewModel();
+            usuVM.NombreDeUsuario=usu.NombreDeUsuario;
+            usuVM.Contrasenia=usu.Contrasenia;
+            usuVM.Tipo=usu.Tipo;
+            usuVM.Id=usu.Id;
+            return View(usuVM);
         }
         catch (Exception ex)
         {
@@ -86,14 +91,14 @@ public class UsuarioController : Controller
     }
 
     [HttpPost]
-    public IActionResult Modifica(UsuarioViewModel usu){
+    public IActionResult ModificarUsuario(UsuarioViewModel usu){
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
-        if (ModelState.IsValid)
-        {
+        //if(!ModelState.IsValid) return RedirectToAction("Index");
+        var usuarioMod=new usuario(usu);
             try
             {
-                usuarioRepositorio.ModificarUsuario(usu.Id, new usuario(usu));
+                _usuarioRepositorio.ModificarUsuario(usu.Id, usuarioMod);
                 return RedirectToAction("ListarUsuarios");
             }
             catch(Exception ex)
@@ -101,9 +106,6 @@ public class UsuarioController : Controller
                 _logger.LogError(ex.ToString());
                 return RedirectToAction("Error");
             }
-            
-        }
-        return View(usu);
     }
     [HttpGet]
     public IActionResult EliminarUsuario(int id)
@@ -112,7 +114,7 @@ public class UsuarioController : Controller
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
         try
         {
-            var usuario = usuarioRepositorio.ObtenerUsuario(id);
+            var usuario = _usuarioRepositorio.ObtenerUsuario(id);
             return View(new UsuarioViewModel(usuario));
         }
         catch (Exception ex)
@@ -123,12 +125,12 @@ public class UsuarioController : Controller
     }
 
     [HttpPost]
-    public IActionResult Elimina(UsuarioViewModel usu){
+    public IActionResult EliminarUsuario(UsuarioViewModel usu){
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         if(HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToAction("Error");
         try
         {
-            usuarioRepositorio.BorrarUsuario(usu.Id);
+            _usuarioRepositorio.BorrarUsuario(usu.Id);
             return RedirectToAction("ListarUsuarios");
         }
         catch (Exception ex)

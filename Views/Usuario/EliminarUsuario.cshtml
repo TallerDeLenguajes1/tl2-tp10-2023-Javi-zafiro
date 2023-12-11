@@ -5,8 +5,10 @@
 <div>
     <p>esta seguro que desea eliminar el usuario @Model.NombreDeUsuario ?</p>
 </div>
-<form asp-controller="Usuario" asp-action="Elimina">
+<form asp-controller="Usuario" asp-action="EliminarUsuario">
     <input asp-for="Id" type="hidden">
     <button type="submit" class="btn btn-danger" onclick="return confirm('estas seguro de querer borrar al usuario @Model.NombreDeUsuario?')">Borrar</button>
     <a asp-controller="Usuario" asp-action="ListarUsuario" class="btn btn-primary">Cancelar</a>
 </form>
+
+@section Scripts{<partial name="_ValidationScriptsPartial"/>}

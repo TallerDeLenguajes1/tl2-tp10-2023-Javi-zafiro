@@ -8,4 +8,5 @@ public interface IUsuarioRepository
     public List<usuario> ListarUsuarios();
     public usuario ObtenerUsuario(int idUsuario);
     public void BorrarUsuario(int idUsuario);
+    public usuario ObtenerUsuarioLogin(string nombre, string contrasenia);
 }

@@ -8,13 +8,13 @@ namespace tl2_tp10_2023_Javi_zafiro.Controllers;
 
 public class TareaController : Controller
 {
-    private readonly TareaRepository tareaRepositorio;
+    private readonly ITareaRepository _tareaRepositorio;
     private readonly ILogger<UsuarioController> _logger;
 
-    public TareaController(ILogger<UsuarioController> logger)
+    public TareaController(ILogger<UsuarioController> logger, ITareaRepository tareaRepositorio)
     {
         _logger=logger;
-        tareaRepositorio = new TareaRepository();
+        _tareaRepositorio = tareaRepositorio;
     }
 
     public IActionResult Index()
@@ -26,7 +26,7 @@ public class TareaController : Controller
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         int.TryParse(HttpContext.Session.GetString("id"), out int id);
-        var lista= tareaRepositorio.ListarTareasPorUsuario(id);
+        var lista= _tareaRepositorio.ListarTareasPorUsuario(id);
         return View(new ListarTareasViewModel(lista));
     }
 
@@ -34,7 +34,7 @@ public class TareaController : Controller
     public IActionResult ListarTareasTablero(int id)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        var lista= tareaRepositorio.ListarTareasPorTablero(id);
+        var lista= _tareaRepositorio.ListarTareasPorTablero(id);
         return View(new ListarTareasViewModel(lista));
     }
 
@@ -50,7 +50,7 @@ public class TareaController : Controller
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         if (ModelState.IsValid)
         {
-            tareaRepositorio.CrearTarea(1, new tarea(tar));
+            _tareaRepositorio.CrearTarea(1, new tarea(tar));
             return RedirectToAction("ListarTareas");
         }
         return View(tar) ;
@@ -59,7 +59,7 @@ public class TareaController : Controller
     public IActionResult ModificarTarea(int id)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        var tarea = tareaRepositorio.ObtenerTarea(id);
+        var tarea = _tareaRepositorio.ObtenerTarea(id);
         if (tarea!=null)
         {
             return View(new TareaViewModel(tarea));
@@ -68,11 +68,11 @@ public class TareaController : Controller
     }
 
     [HttpPost]
-    public IActionResult Modifica(TareaViewModel tar){
+    public IActionResult ModificarTarea(TareaViewModel tar){
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         if (ModelState.IsValid)
         {
-            tareaRepositorio.ModificarTarea(tar.Id, new tarea(tar));
+            _tareaRepositorio.ModificarTarea(tar.Id, new tarea(tar));
             return RedirectToAction("ListarTareas");
         }
         return View(tar);
@@ -81,7 +81,7 @@ public class TareaController : Controller
     public IActionResult EliminarTarea(int id)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        var tarea = tareaRepositorio.ObtenerTarea(id);
+        var tarea = _tareaRepositorio.ObtenerTarea(id);
         if (tarea!=null)
         {
             return View(new TareaViewModel(tarea));
@@ -90,9 +90,13 @@ public class TareaController : Controller
     }
 
     [HttpPost]
-    public IActionResult Elimina(TareaViewModel tar){
+    public IActionResult EliminarTarea(TareaViewModel tar){
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        tareaRepositorio.BorrarTarea(tar.Id);
+        _tareaRepositorio.BorrarTarea(tar.Id);
         return RedirectToAction("ListarTareas");
+    }
+
+    public IActionResult Error(){
+        return View(new ErrorViewModel());
     }
 }

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_Javi_zafiro.Models;
+using tl2_tp10_2023_Javi_zafiro.ViewModels;
 using repositorioParaKamba;
 
 namespace tl2_tp10_2023_Javi_zafiro.Controllers;
@@ -8,11 +9,11 @@ namespace tl2_tp10_2023_Javi_zafiro.Controllers;
 public class LoginController : Controller
 {
     private readonly ILogger<LoginController> _logger;
-    private readonly UsuarioRepository usuarioRepositorio;
+    private readonly IUsuarioRepository _usuarioRepositorio;
 
-    public LoginController(ILogger<LoginController> logger )
+    public LoginController(ILogger<LoginController> logger, IUsuarioRepository usuarioRepositorio)
     {
-        usuarioRepositorio = new UsuarioRepository();
+        _usuarioRepositorio = usuarioRepositorio;
         _logger = logger;
     }
 
@@ -22,18 +23,19 @@ public class LoginController : Controller
     }
 
     [HttpPost]
-    public IActionResult ComprobarUsuario(login usu){
+    public IActionResult ComprobarUsuario(LoginViewModel usu){
         if(!ModelState.IsValid) return RedirectToAction("Index");
-        var log = usuarioRepositorio.ObtenerUsuarioLogin(usu.Nombre, usu.Contrasenia);
-        if (log.NombreDeUsuario!=null)
+        try
         {
+            var log = _usuarioRepositorio.ObtenerUsuarioLogin(usu.Nombre, usu.Contrasenia);
             LoguearUsuario(log);
-        }else
-        {
-            _logger.LogWarning("usuario o contraseña incorrecto");
-            return RedirectToRoute(new{controller="Usuario", action="Index"});
+            return RedirectToRoute(new{controller="Usuario", action="ListarUsuarios"});
         }
-        return RedirectToRoute(new{controller="Usuario", action="ListarUsuarios"});
+        catch (Exception ex)
+        {
+            _logger.LogWarning($"Error: {ex} Intento de acceso invalido - Usuario: {usu.Nombre} - Clave ingresada: {usu.Contrasenia}");
+            return RedirectToAction("Index");
+        }
     }
 
     private void LoguearUsuario(usuario usua){

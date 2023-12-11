@@ -5,7 +5,7 @@
 <div>
     <p>desea modificar esta tarea: @Model.Nombre, @Model.Descripcion ?</p>
 </div>
-<form asp-controller="Tarea" asp-action="Modifica">
+<form asp-controller="Tarea" asp-action="ModificarTarea">
     <input asp-for="Id" type="hidden">
     <label asp-for="Nombre"></label>
     <input asp-for="@Model.Nombre" />
@@ -24,3 +24,5 @@
     <button type="submit" class="btn btn-primary" onclick="return confirm('estas seguro de cambiar esta tarea?')">Actualizar</button>
     <a asp-controller="Tarea" asp-action="ListarTareas" class="btn btn-primary">Cancelar</a>
 </form>
+
+@section Scripts{<partial name="_ValidationScriptsPartial"/>}

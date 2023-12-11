@@ -20,7 +20,7 @@ public class UsuarioViewModel
     public TiposUsuario Tipo { get => tipo; set => tipo = value; }
 
     [Display(Name = "Contraseña")]
-    [MinLength(8, ErrorMessage = "Como minimo 8 caracteres")]
+    [MinLength(4, ErrorMessage = "Como minimo 4 caracteres")]
     public string Contrasenia { get => contrasenia; set => contrasenia = value; }
 
     public UsuarioViewModel(usuario usu){

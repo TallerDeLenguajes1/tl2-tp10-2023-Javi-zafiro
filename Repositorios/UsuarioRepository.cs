@@ -5,11 +5,16 @@ namespace repositorioParaKamba;
 
 public class UsuarioRepository : IUsuarioRepository
 {
-    private string cadenaConexion="Data Source=DB/kamba.db;Cache=Shared";
+    private readonly string connectionString;
+
+    public UsuarioRepository(string CadenaDeConexion)
+    {
+        connectionString = CadenaDeConexion;
+    }
 
     public void CrearUsuario(usuario usu){
         var query = "INSERT INTO usuario (nombre, tipo, contrasenia) VALUES (@nombre, @tipo, @contrasenia);";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -22,7 +27,7 @@ public class UsuarioRepository : IUsuarioRepository
     }
     public void ModificarUsuario(int idUsuario, usuario usu){
         var query = "UPDATE usuario SET nombre = @nombre, tipo = @tipo WHERE id = @idusu;";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -36,7 +41,7 @@ public class UsuarioRepository : IUsuarioRepository
     public List<usuario> ListarUsuarios(){
         var query="SELECT * FROM usuario;";
         List<usuario> listaDeUsuarios = new List<usuario>();
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -57,7 +62,7 @@ public class UsuarioRepository : IUsuarioRepository
     public usuario ObtenerUsuario(int idUsuario){
         var usu = new usuario();
         var query="SELECT * FROM usuario WHERE id= @idusu;";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -68,6 +73,7 @@ public class UsuarioRepository : IUsuarioRepository
                     usu.Id=Convert.ToInt32(reader["id"]);
                     usu.NombreDeUsuario=reader["nombre"].ToString();
                     usu.Tipo=(TiposUsuario)Enum.Parse(typeof(TiposUsuario), reader["tipo"].ToString());
+                    usu.Contrasenia=reader["contrasenia"].ToString();
                 }
             }
             connection.Close();
@@ -78,7 +84,7 @@ public class UsuarioRepository : IUsuarioRepository
     public usuario ObtenerUsuarioLogin(string nombre, string contrasenia){
         var usu = new usuario();
         var query="SELECT * FROM usuario WHERE nombre= @nombre AND contrasenia=@contra;";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -98,7 +104,7 @@ public class UsuarioRepository : IUsuarioRepository
     }
     public void BorrarUsuario(int idUsuario){
         var query="DELETE FROM usuario WHERE id=@idusu;";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);

@@ -5,8 +5,10 @@
 <div>
     <p>esta seguro que desea eliminar esta tarea @Model.Nombre ?</p>
 </div>
-<form asp-controller="Tarea" asp-action="Elimina">
+<form asp-controller="Tarea" asp-action="EliminarTarea">
     <input asp-for="Id" type="hidden">
     <button type="submit" class="btn btn-danger" onclick="return confirm('estas seguro de querer borrar esta tarea @Model.Nombre?')">Borrar</button>
     <a asp-controller="Tarea" asp-action="ListarTareas" class="btn btn-primary">Cancelar</a>
 </form>
+
+@section Scripts{<partial name="_ValidationScriptsPartial"/>}

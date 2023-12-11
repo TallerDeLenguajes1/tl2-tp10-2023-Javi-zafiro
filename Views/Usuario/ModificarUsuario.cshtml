@@ -5,14 +5,16 @@
 <div>
     <p>desea cambiar el nombre de este usuario: @Model.NombreDeUsuario ?</p>
 </div>
-<form asp-controller="Usuario" asp-action="Modifica">
-    <input asp-for="Id" type="hidden">
-    <label asp-for="NombreDeUsuario"></label>
-    <input asp-for="@Model.NombreDeUsuario" />
-    <label asp-for="Tipo"></label>
+<form asp-controller="Usuario" asp-action="ModificarUsuario">
+    <input asp-for="@Model.Id" value="@Model.Id" type="hidden">
+    <label asp-for="@Model.NombreDeUsuario"></label>
+    <input asp-for="@Model.NombreDeUsuario" value="@Model.NombreDeUsuario" />
+    <label asp-for="@Model.Tipo"></label>
     <select asp-for="@Model.Tipo" asp-items="Html.GetEnumSelectList<TiposUsuario>()">
         <option value="">Seleccione un estado</option>
     </select>
     <button type="submit" class="btn btn-primary" onclick="return confirm('estas seguro de cambiar este usuario?')">Actualizar</button>
-    <a asp-controller="Usuario" asp-action="ListarUsuario" class="btn btn-primary">Cancelar</a>
+    <a asp-controller="Usuario" asp-action="ListarUsuarios" class="btn btn-primary">Cancelar</a>
 </form>
+
+@section Scripts{<partial name="_ValidationScriptsPartial"/>}

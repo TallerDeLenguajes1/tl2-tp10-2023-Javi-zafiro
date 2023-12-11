@@ -5,11 +5,16 @@ namespace repositorioParaKamba;
 
 public class TareaRepository : ITareaRepository
 {
-    private string cadenaConexion="Data Source=DB/kamba.db;Cache=Shared";
+    private readonly string connectionString;
+
+    public TareaRepository(string CadenaDeConexion)
+    {
+        connectionString = CadenaDeConexion;
+    }
     public tarea CrearTarea(int idTablero, tarea tar){
         tar.IdTablero=idTablero;
         var query = "INSERT INTO tarea (id_tablero, nombre, estado, descripcion, color, id_usuario_asignado) VALUES (@idtab, @nombre, @estado, @descripcion, @color, @idusu);";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -26,7 +31,7 @@ public class TareaRepository : ITareaRepository
     }
     public void ModificarTarea(int idTarea, tarea tar){
         var query = "UPDATE tarea SET id_tablero = @idtab, nombre = @nombre, estado = @estado, descripcion = @descripcion, color = @color, id_usuario_asignado = @idusu WHERE id = @idtar;";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -44,7 +49,7 @@ public class TareaRepository : ITareaRepository
     public tarea ObtenerTarea(int idTarea){
         var tar = new tarea();
         var query="SELECT * FROM tarea WHERE id= @idtar;";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -68,7 +73,7 @@ public class TareaRepository : ITareaRepository
     public List<tarea> ListarTareasPorUsuario(int idUsuario){
         var query="SELECT * FROM tarea WHERE id_usuario_asignado = @idusu;";
         List<tarea> listaDeTareasXUsuario = new List<tarea>();
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -94,7 +99,7 @@ public class TareaRepository : ITareaRepository
     public List<tarea> ListarTareasPorTablero(int idTablero){
         var query="SELECT * FROM tarea WHERE id_tablero = @idtab;";
         List<tarea> listaDeTareasXTablero = new List<tarea>();
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -119,7 +124,7 @@ public class TareaRepository : ITareaRepository
     }
     public void BorrarTarea(int idTarea){
         var query="DELETE FROM tarea WHERE id=@idtar;";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -130,7 +135,7 @@ public class TareaRepository : ITareaRepository
     }
     public void AsignarTareaAUsuario(int idUsuario, int idTarea){
         var query="UPDATE tarea SET id_usuario_asignado=@idusu WHERE id=@idtar";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
@@ -143,7 +148,7 @@ public class TareaRepository : ITareaRepository
     public List<tarea> ListarTodasTareas(){
         var query="SELECT * FROM tarea;";
         List<tarea> listaDeTareasXUsuario = new List<tarea>();
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
