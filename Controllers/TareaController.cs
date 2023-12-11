@@ -31,10 +31,10 @@ public class TareaController : Controller
     }
 
     [HttpGet]
-    public IActionResult ListarTareas(int idtab)
+    public IActionResult ListarTareasTablero(int id)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        var lista= tareaRepositorio.ListarTareasPorTablero(idtab);
+        var lista= tareaRepositorio.ListarTareasPorTablero(id);
         return View(new ListarTareasViewModel(lista));
     }
 
