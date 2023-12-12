@@ -13,29 +13,46 @@ public class UsuarioRepository : IUsuarioRepository
     }
 
     public void CrearUsuario(usuario usu){
-        var query = "INSERT INTO usuario (nombre, tipo, contrasenia) VALUES (@nombre, @tipo, @contrasenia);";
-        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        try
         {
-            connection.Open();
-            var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@nombre", usu.NombreDeUsuario));
-            command.Parameters.Add(new SQLiteParameter("@tipo", (int)usu.Tipo));
-            command.Parameters.Add(new SQLiteParameter("@contrasenia", usu.Contrasenia));
-            command.ExecuteNonQuery();
-            connection.Close();
+            var query = "INSERT INTO usuario (nombre, tipo, contrasenia) VALUES (@nombre, @tipo, @contrasenia);";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@nombre", usu.NombreDeUsuario));
+                command.Parameters.Add(new SQLiteParameter("@tipo", (int)usu.Tipo));
+                command.Parameters.Add(new SQLiteParameter("@contrasenia", usu.Contrasenia));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo crear el usuario");
+        }
+        
     }
     public void ModificarUsuario(int idUsuario, usuario usu){
-        var query = "UPDATE usuario SET nombre = @nombre, tipo = @tipo WHERE id = @idusu;";
-        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        try
         {
-            connection.Open();
-            var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@nombre", usu.NombreDeUsuario));
-            command.Parameters.Add(new SQLiteParameter("@tipo", (int)usu.Tipo));
-            command.Parameters.Add(new SQLiteParameter("@idusu", idUsuario));
-            command.ExecuteNonQuery();
-            connection.Close();
+            var query = "UPDATE usuario SET nombre = @nombre, tipo = @tipo WHERE id = @idusu;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@nombre", usu.NombreDeUsuario));
+                command.Parameters.Add(new SQLiteParameter("@tipo", (int)usu.Tipo));
+                command.Parameters.Add(new SQLiteParameter("@idusu", idUsuario));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo modificar el usuario");
         }
     }
     public List<usuario> ListarUsuarios(){
@@ -57,10 +74,12 @@ public class UsuarioRepository : IUsuarioRepository
             }
             connection.Close();
         }
+        if (listaDeUsuarios.Count<=0)
+            throw new Exception("Lista Vacia");
         return (listaDeUsuarios);
     }
     public usuario ObtenerUsuario(int idUsuario){
-        var usu = new usuario();
+        usuario usu = null;
         var query="SELECT * FROM usuario WHERE id= @idusu;";
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
@@ -78,6 +97,8 @@ public class UsuarioRepository : IUsuarioRepository
             }
             connection.Close();
         }
+        if (usu==null)
+            throw new Exception("Usuario no encontrado.");
         return(usu);
     }
 
@@ -100,17 +121,28 @@ public class UsuarioRepository : IUsuarioRepository
             }
             connection.Close();
         }
+        if (usu==null)
+            throw new Exception("Usuario no encontrado.");
         return(usu);
     }
     public void BorrarUsuario(int idUsuario){
-        var query="DELETE FROM usuario WHERE id=@idusu;";
-        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        try
         {
-            connection.Open();
-            var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idusu", idUsuario));
-            command.ExecuteNonQuery();
-            connection.Close();
+            var query="DELETE FROM usuario WHERE id=@idusu;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idusu", idUsuario));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo borrar el usuario");
+        }
+        
     }
 }

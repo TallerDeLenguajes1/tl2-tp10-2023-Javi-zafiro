@@ -11,14 +11,15 @@ public class TareaRepository : ITareaRepository
     {
         connectionString = CadenaDeConexion;
     }
-    public tarea CrearTarea(int idTablero, tarea tar){
-        tar.IdTablero=idTablero;
-        var query = "INSERT INTO tarea (id_tablero, nombre, estado, descripcion, color, id_usuario_asignado) VALUES (@idtab, @nombre, @estado, @descripcion, @color, @idusu);";
+    public void CrearTarea(int idTablero, tarea tar){
+        try
+        {
+            var query = "INSERT INTO tarea (id_tablero, nombre, estado, descripcion, color, id_usuario_asignado) VALUES (@idtab, @nombre, @estado, @descripcion, @color, @idusu);";
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
             var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idtab", tar.IdTablero));
+            command.Parameters.Add(new SQLiteParameter("@idtab", idTablero));
             command.Parameters.Add(new SQLiteParameter("@nombre", tar.Nombre));
             command.Parameters.Add(new SQLiteParameter("@estado", (int)tar.Estado));
             command.Parameters.Add(new SQLiteParameter("@descripcion", tar.Descripcion));
@@ -26,28 +27,43 @@ public class TareaRepository : ITareaRepository
             command.Parameters.Add(new SQLiteParameter("@idusu", tar.Usuario_asignado));
             command.ExecuteNonQuery();
             connection.Close();
-            return tar;
+            
         }
+        }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo crear la tarea.");
+        }
+        
     }
     public void ModificarTarea(int idTarea, tarea tar){
-        var query = "UPDATE tarea SET id_tablero = @idtab, nombre = @nombre, estado = @estado, descripcion = @descripcion, color = @color, id_usuario_asignado = @idusu WHERE id = @idtar;";
-        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        try
         {
-            connection.Open();
-            var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idtar", idTarea));
-            command.Parameters.Add(new SQLiteParameter("@idtab", tar.IdTablero));
-            command.Parameters.Add(new SQLiteParameter("@nombre", tar.Nombre));
-            command.Parameters.Add(new SQLiteParameter("@estado", (int)tar.Estado));
-            command.Parameters.Add(new SQLiteParameter("@descripcion", tar.Descripcion));
-            command.Parameters.Add(new SQLiteParameter("@color", tar.Color));
-            command.Parameters.Add(new SQLiteParameter("@idusu", tar.Usuario_asignado));
-            command.ExecuteNonQuery();
-            connection.Close();
+            var query = "UPDATE tarea SET id_tablero = @idtab, nombre = @nombre, estado = @estado, descripcion = @descripcion, color = @color, id_usuario_asignado = @idusu WHERE id = @idtar;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idtar", idTarea));
+                command.Parameters.Add(new SQLiteParameter("@idtab", tar.IdTablero));
+                command.Parameters.Add(new SQLiteParameter("@nombre", tar.Nombre));
+                command.Parameters.Add(new SQLiteParameter("@estado", (int)tar.Estado));
+                command.Parameters.Add(new SQLiteParameter("@descripcion", tar.Descripcion));
+                command.Parameters.Add(new SQLiteParameter("@color", tar.Color));
+                command.Parameters.Add(new SQLiteParameter("@idusu", tar.Usuario_asignado));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo modificar la tarea");
         }
     }
     public tarea ObtenerTarea(int idTarea){
-        var tar = new tarea();
+        tarea tar = null;
         var query="SELECT * FROM tarea WHERE id= @idtar;";
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
@@ -68,6 +84,8 @@ public class TareaRepository : ITareaRepository
             }
             connection.Close();
         }
+        if (tar==null)
+            throw new Exception("No se encontro la tarea");
         return(tar);
     }
     public List<tarea> ListarTareasPorUsuario(int idUsuario){
@@ -94,6 +112,8 @@ public class TareaRepository : ITareaRepository
             }
             connection.Close();
         }
+        if (listaDeTareasXUsuario.Count<=0)
+            throw new Exception("Lista Vacia");
         return (listaDeTareasXUsuario);
     }
     public List<tarea> ListarTareasPorTablero(int idTablero){
@@ -120,34 +140,54 @@ public class TareaRepository : ITareaRepository
             }
             connection.Close();
         }
+        if (listaDeTareasXTablero.Count<=0)
+            throw new Exception("Lista Vacia");
         return (listaDeTareasXTablero);
     }
     public void BorrarTarea(int idTarea){
-        var query="DELETE FROM tarea WHERE id=@idtar;";
-        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        try
         {
-            connection.Open();
-            var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idtar", idTarea));
-            command.ExecuteNonQuery();
-            connection.Close();
+            var query="DELETE FROM tarea WHERE id=@idtar;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idtar", idTarea));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo borrar la tarea");
+        }
+        
     }
     public void AsignarTareaAUsuario(int idUsuario, int idTarea){
-        var query="UPDATE tarea SET id_usuario_asignado=@idusu WHERE id=@idtar";
-        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        
+        try
         {
-            connection.Open();
-            var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idusu", idUsuario));
-            command.Parameters.Add(new SQLiteParameter("@idtar", idTarea));
-            command.ExecuteNonQuery();
-            connection.Close();
+            var query="UPDATE tarea SET id_usuario_asignado=@idusu WHERE id=@idtar";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idusu", idUsuario));
+                command.Parameters.Add(new SQLiteParameter("@idtar", idTarea));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo asignar el usuario");
         }
     }
     public List<tarea> ListarTodasTareas(){
         var query="SELECT * FROM tarea;";
-        List<tarea> listaDeTareasXUsuario = new List<tarea>();
+        List<tarea> listaDeTareas = new List<tarea>();
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
@@ -163,11 +203,13 @@ public class TareaRepository : ITareaRepository
                     tar.Color =reader["color"].ToString();
                     tar.Estado=(EstadoTarea)Enum.Parse(typeof(EstadoTarea), reader["estado"].ToString());
                     tar.Usuario_asignado=Convert.ToInt32(reader["id_usuario_asignado"]);
-                    listaDeTareasXUsuario.Add(tar);
+                    listaDeTareas.Add(tar);
                 }
             }
             connection.Close();
         }
-        return (listaDeTareasXUsuario);
+        if (listaDeTareas.Count<=0)
+            throw new Exception("Lista Vacia");
+        return (listaDeTareas);
     }
 }

@@ -12,34 +12,52 @@ public class TableroRepository : ITableroRepository
         connectionString = CadenaDeConexion;
     }
     public void CrearTablero(tablero tab){
-        var query = "INSERT INTO tablero (id_usuario_asignado, nombre, descripcion) VALUES (@idusu, @nombre, @descripcion);";
-        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        try
         {
-            connection.Open();
-            var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idusu", tab.IdUsuariPropietario));
-            command.Parameters.Add(new SQLiteParameter("@nombre", tab.Nombre));
-            command.Parameters.Add(new SQLiteParameter("@descripcion", tab.Descripcion));
-            command.ExecuteNonQuery();
-            connection.Close();
+            var query = "INSERT INTO tablero (id_usuario_asignado, nombre, descripcion) VALUES (@idusu, @nombre, @descripcion);";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idusu", tab.IdUsuariPropietario));
+                command.Parameters.Add(new SQLiteParameter("@nombre", tab.Nombre));
+                command.Parameters.Add(new SQLiteParameter("@descripcion", tab.Descripcion));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo crear el tablero") ;
+        }
+        
     }
     public void ModificarTablero(int idTablero, tablero tab){
-        var query = "UPDATE tablero SET id_usuario_asignado=@idusu, nombre = @nombre, descripcion = @descripcion WHERE id = @idtablero;";
-        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        try
         {
-            connection.Open();
-            var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idusu", tab.IdUsuariPropietario));
-            command.Parameters.Add(new SQLiteParameter("@nombre", tab.Nombre));
-            command.Parameters.Add(new SQLiteParameter("@descripcion", tab.Descripcion));
-            command.Parameters.Add(new SQLiteParameter("@idtablero", idTablero));
-            command.ExecuteNonQuery();
-            connection.Close();
+            var query = "UPDATE tablero SET id_usuario_asignado=@idusu, nombre = @nombre, descripcion = @descripcion WHERE id = @idtablero;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idusu", tab.IdUsuariPropietario));
+                command.Parameters.Add(new SQLiteParameter("@nombre", tab.Nombre));
+                command.Parameters.Add(new SQLiteParameter("@descripcion", tab.Descripcion));
+                command.Parameters.Add(new SQLiteParameter("@idtablero", idTablero));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo modificar el tablero");
+        }
+        
     }
     public tablero ObtenerTablero(int idTablero){
-        var tab = new tablero();
+        tablero tab = null;
         var query="SELECT * FROM tablero WHERE id= @idtablero;";
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
@@ -57,6 +75,8 @@ public class TableroRepository : ITableroRepository
             }
             connection.Close();
         }
+        if (tab==null)
+            throw new Exception("Tablero no encontrado.");
         return(tab);
     }
     public List<tablero> ListarTableros(){
@@ -79,6 +99,8 @@ public class TableroRepository : ITableroRepository
             }
             connection.Close();
         }
+        if (listaDeTableros.Count<=0)
+            throw new Exception("Lista Vacia.");
         return (listaDeTableros);
     }
     public List<tablero> ListarTablerosDeUsuario(int idUsuario){
@@ -102,17 +124,28 @@ public class TableroRepository : ITableroRepository
             }
             connection.Close();
         }
+        if (listaDeTableros.Count<=0)
+            throw new Exception("Lista Vacia.");
         return (listaDeTableros);
     }
     public void BorrarTablero(int idTablero){
-        var query="DELETE FROM tablero WHERE id=@idtablero;";
-        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        try
         {
-            connection.Open();
-            var command= new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idtablero", idTablero));
-            command.ExecuteNonQuery();
-            connection.Close();
+            var query="DELETE FROM tablero WHERE id=@idtablero;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idtablero", idTablero));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo borrar el tablero");
+        }
+        
     }
 }

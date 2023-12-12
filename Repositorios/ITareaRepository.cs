@@ -3,7 +3,7 @@ namespace repositorioParaKamba;
 
 public interface ITareaRepository
 {
-    public tarea CrearTarea(int idTablero, tarea tar);
+    public void CrearTarea(int idTablero, tarea tar);
     public void ModificarTarea(int idTarea, tarea tar);
     public tarea ObtenerTarea(int idTarea);
     public List<tarea> ListarTareasPorUsuario(int idUsuario);
