@@ -10,4 +10,5 @@ public interface ITareaRepository
     public List<tarea> ListarTareasPorTablero(int idTablero);
     public void BorrarTarea(int idTarea);
     public void AsignarTareaAUsuario(int idUsuario, int idTarea);
+    public List<tarea> ListarTodasTareas();
 }

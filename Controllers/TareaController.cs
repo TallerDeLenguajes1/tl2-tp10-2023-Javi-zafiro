@@ -24,25 +24,50 @@ public class TareaController : Controller
     [HttpGet]
     public IActionResult ListarTareas()
     {
-        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        int.TryParse(HttpContext.Session.GetString("id"), out int id);
-        var lista= _tareaRepositorio.ListarTareasPorUsuario(id);
-        return View(new ListarTareasViewModel(lista));
+        try
+        {
+            if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
+            int.TryParse(HttpContext.Session.GetString("id"), out int id);
+            var lista= _tareaRepositorio.ListarTareasPorUsuario(id);
+            return View(new ListarTareasViewModel(lista));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+        
     }
 
     [HttpGet]
     public IActionResult ListarTareasTablero(int id)
     {
-        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        var lista= _tareaRepositorio.ListarTareasPorTablero(id);
-        return View(new ListarTareasViewModel(lista));
+        try
+        {
+            if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
+            var lista= _tareaRepositorio.ListarTareasPorTablero(id);
+            return View(new ListarTareasViewModel(lista));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
 
     [HttpGet]
     public IActionResult CrearTarea()
     {
-        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        return View(new TareaViewModel());
+        try
+        {
+            if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
+            return View(new TareaViewModel());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
     [HttpPost]
     public IActionResult CrearTarea(TareaViewModel tar)
@@ -100,3 +125,15 @@ public class TareaController : Controller
         return View(new ErrorViewModel());
     }
 }
+
+/*
+        try
+        {
+            
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
+*/

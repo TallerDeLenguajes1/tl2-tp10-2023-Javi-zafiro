@@ -28,7 +28,13 @@ public class UsuarioController : Controller
         try
         {
             var lista= _usuarioRepositorio.ListarUsuarios();
-            return View(new ListaUsuariosViewModel(lista));
+            if (HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString())
+            {
+                return View(new ListaUsuariosViewModel(lista, false));
+            }else
+            {
+                return View(new ListaUsuariosViewModel(lista, true));
+            }
         }
         catch (Exception ex)
         {

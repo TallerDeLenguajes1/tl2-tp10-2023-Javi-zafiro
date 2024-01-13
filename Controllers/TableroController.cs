@@ -47,7 +47,7 @@ public class TableroController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return RedirectToAction("Error");
+            return RedirectToAction("ErrorLista");
         }
     }
 
@@ -153,16 +153,9 @@ public class TableroController : Controller
     public IActionResult Error(){
         return View(new ErrorViewModel());
     }
+
+    public IActionResult ErrorLista(){
+        return View();
+    }
 }
 
-/*
-try
-{
-    
-}
-catch (Exception ex)
-{
-    _logger.LogError(ex.ToString());
-    return RedirectToAction("Error");
-}
-*/
