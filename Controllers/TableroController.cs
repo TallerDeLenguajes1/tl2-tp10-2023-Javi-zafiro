@@ -57,7 +57,9 @@ public class TableroController : Controller
         try
         {
             if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-            return View(new TableroViewModel());
+            int id;
+            int.TryParse(HttpContext.Session.GetString("id"), out id);
+            return View(new CrearTableroViewModel(id));
         }
         catch (Exception ex)
         {
@@ -67,7 +69,7 @@ public class TableroController : Controller
         
     }
     [HttpPost]
-    public IActionResult CrearTablero(TableroViewModel tab)
+    public IActionResult CrearTablero(CrearTableroViewModel tab)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
         if (ModelState.IsValid)

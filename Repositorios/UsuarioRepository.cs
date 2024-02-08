@@ -89,6 +89,7 @@ public class UsuarioRepository : IUsuarioRepository
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
                 while(reader.Read()){
+                    usu = new usuario();
                     usu.Id=Convert.ToInt32(reader["id"]);
                     usu.NombreDeUsuario=reader["nombre"].ToString();
                     usu.Tipo=(TiposUsuario)Enum.Parse(typeof(TiposUsuario), reader["tipo"].ToString());
@@ -97,7 +98,7 @@ public class UsuarioRepository : IUsuarioRepository
             }
             connection.Close();
         }
-        if (usu==null)
+        if (usu==null || string.IsNullOrEmpty(usu.NombreDeUsuario))
             throw new Exception("Usuario no encontrado.");
         return(usu);
     }

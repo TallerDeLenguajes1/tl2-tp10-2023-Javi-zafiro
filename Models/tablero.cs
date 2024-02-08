@@ -20,6 +20,12 @@ public class tablero
         this.idUsuariPropietario = tablero.IdUsuariPropietario;
     }
 
+    public tablero(CrearTableroViewModel tablero){
+        this.id = tablero.Id;
+        this.nombre = tablero.Nombre;
+        this.descripcion = tablero.Descripcion;
+        this.idUsuariPropietario = tablero.IdUsuariPropietario;
+    }
     public tablero(){
         
     }

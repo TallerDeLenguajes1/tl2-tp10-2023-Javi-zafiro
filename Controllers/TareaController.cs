@@ -34,7 +34,7 @@ public class TareaController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return RedirectToAction("Error");
+            return RedirectToAction("ErrorListaUsuario");
         }
         
     }
@@ -51,17 +51,17 @@ public class TareaController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return RedirectToAction("Error");
+            return RedirectToAction("ErrorLista", new {idtab=id});
         }
     }
 
     [HttpGet]
-    public IActionResult CrearTarea()
+    public IActionResult CrearTarea(int Id)
     {
         try
         {
             if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-            return View(new TareaViewModel());
+            return View(new CrearTareaViewModel(Id));
         }
         catch (Exception ex)
         {
@@ -70,59 +70,106 @@ public class TareaController : Controller
         }
     }
     [HttpPost]
-    public IActionResult CrearTarea(TareaViewModel tar)
+    public IActionResult CrearTarea(CrearTareaViewModel tar)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        if (ModelState.IsValid)
+        try
         {
-            _tareaRepositorio.CrearTarea(1, new tarea(tar));
-            return RedirectToAction("ListarTareas");
-        }
+            if (ModelState.IsValid)
+            {
+                _tareaRepositorio.CrearTarea(1, new tarea(tar));
+                return RedirectToRoute(new{controller= "Tablero", action="ListarTableros"});
+            }
         return View(tar) ;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
     [HttpGet]
     public IActionResult ModificarTarea(int id)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        var tarea = _tareaRepositorio.ObtenerTarea(id);
+        try
+        {
+            var tarea = _tareaRepositorio.ObtenerTarea(id);
         if (tarea!=null)
         {
             return View(new TareaViewModel(tarea));
         }
         return NotFound();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
 
     [HttpPost]
     public IActionResult ModificarTarea(TareaViewModel tar){
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        if (ModelState.IsValid)
+        try
+        {
+            if (ModelState.IsValid)
         {
             _tareaRepositorio.ModificarTarea(tar.Id, new tarea(tar));
             return RedirectToAction("ListarTareas");
         }
         return View(tar);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
     [HttpGet]
     public IActionResult EliminarTarea(int id)
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        var tarea = _tareaRepositorio.ObtenerTarea(id);
-        if (tarea!=null)
+        try
         {
-            return View(new TareaViewModel(tarea));
+            var tarea = _tareaRepositorio.ObtenerTarea(id);
+            if (tarea!=null)
+            {
+                return View(new TareaViewModel(tarea));
+            }
+            return NotFound();
         }
-        return NotFound();
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
 
     [HttpPost]
     public IActionResult EliminarTarea(TareaViewModel tar){
-        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
-        _tareaRepositorio.BorrarTarea(tar.Id);
-        return RedirectToAction("ListarTareas");
+        try
+        {
+            if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
+            _tareaRepositorio.BorrarTarea(tar.Id);
+            return RedirectToAction("ListarTareas");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("Error");
+        }
     }
 
     public IActionResult Error(){
         return View(new ErrorViewModel());
+    }
+    public IActionResult ErrorLista(int id){
+        return View(id);
+    }
+
+    public IActionResult ErrorListaUsuario(){
+        return View();
     }
 }
 

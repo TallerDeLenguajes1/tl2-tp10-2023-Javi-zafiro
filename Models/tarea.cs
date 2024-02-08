@@ -36,7 +36,15 @@ public class tarea
         this.estado = tarea.Estado;
         this.usuario_asignado = tarea.Usuario_asignado;
     }
-
+    public tarea(CrearTareaViewModel tarea){
+        this.id = tarea.Id;
+        this.idTablero = tarea.IdTablero;
+        this.nombre = tarea.Nombre;
+        this.descripcion = tarea.Descripcion;
+        this.color = tarea.Color;
+        this.estado = tarea.Estado;
+        this.usuario_asignado = tarea.Usuario_asignado;
+    }
     public tarea(){
         
     }

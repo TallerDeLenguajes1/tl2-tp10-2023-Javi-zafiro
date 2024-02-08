@@ -1,7 +1,7 @@
-@model TableroViewModel
+@model CrearTableroViewModel
 <form asp-controller="Tablero" asp-action="CrearTablero">
-    <label asp-for="IdUsuariPropietario"></label>
-    <input asp-for="IdUsuariPropietario" />
+    <label asp-for="@Model.IdUsuariPropietario"></label>
+    <input asp-for="@Model.IdUsuariPropietario" />
     <label asp-for="Nombre"></label>
     <input asp-for="Nombre" />
     <label asp-for="Descripcion"></label>

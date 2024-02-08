@@ -91,7 +91,7 @@ public class UsuarioController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return RedirectToAction("Error");
+            return RedirectToAction("Index");
         }
         
     }
