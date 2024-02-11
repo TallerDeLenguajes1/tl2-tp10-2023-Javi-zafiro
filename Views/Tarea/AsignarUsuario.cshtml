@@ -1,0 +1,27 @@
+@model AsignarUsuarioViewModel
+
+<h3>Modificar Tarea</h3>
+
+<div>
+    <p>Vamos a asignar un usiario a la tarea: @Model.Nombre, @Model.Descripcion</p>
+    <p>Seleccione en la lista el usuario que realizara esta tarea</p>
+</div>
+<form asp-controller="Tarea" asp-action="AsignarUsuario">
+    <input asp-for="Id" type="hidden">
+    <input asp-for="@Model.Nombre" type="hidden"/>
+    <input asp-for="@Model.Descripcion" type="hidden"/>
+    <input asp-for="@Model.IdTablero" type="hidden"/>
+    <label asp-for="Usuario_asignado"></label>
+    <select asp-for="Usuario_asignado">
+        <option value="">Seleccione un Usuario</option>
+        @if(Model.Lista != null && Model.Lista.Any()) {
+            @foreach(var item in Model.Lista){
+                <option value="@item.Id">@item.NombreDeUsuario</option>
+            }
+        }
+    </select>
+    <button type="submit" class="btn btn-primary">Asignar</button>
+    <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@Model.IdTablero" class="btn btn-primary">Cancelar</a>
+</form>
+
+@section Scripts{<partial name="_ValidationScriptsPartial"/>}

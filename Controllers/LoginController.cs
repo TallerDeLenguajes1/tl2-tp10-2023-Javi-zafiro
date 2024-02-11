@@ -30,7 +30,7 @@ public class LoginController : Controller
             var log = _usuarioRepositorio.ObtenerUsuarioLogin(usu.Nombre, usu.Contrasenia);
             LoguearUsuario(log);
             _logger.LogInformation($"El usuario {usu.Nombre} ingreso correctamente");
-            return RedirectToRoute(new{controller="Usuario", action="ListarUsuarios"});
+            return RedirectToRoute(new{controller="Home", action="Index"});
         }
         catch (Exception ex)
         {

@@ -1,6 +1,8 @@
-@model ListaTodosTablerosViewModel
+@model ListaTablerosViewModel
 <H3>Listado de Tableros</H3>
-<table class="table">
+@if(Model.Admin){
+    <table class="table">
+    <legend>Todos Los Tableros</legend>
     <thead>
         <tr>
             <th scope="col">Id</th>
@@ -12,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var tab in Model.ListaTab)
+        @foreach (var tab in Model.ListaTabTodos)
         {
             <tr>
                 <th scope="row">@tab.Id</th>
@@ -21,7 +23,7 @@
                 <td>@tab.Descripcion</td>
                 <td>
                     <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
-                    <a asp-controller="Tarea" asp-action="CrearTarea" asp-route-id="@tab.Id">Lista De Tareas</a>
+                    <a asp-controller="Tarea" asp-action="CrearTarea" asp-route-id="@tab.Id">Crear Tarea</a>
                 </td>
                 <td>
                     <a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-id="@tab.Id">Editar</a>
@@ -31,6 +33,59 @@
         }
     </tbody>
 </table>
+}else{
+    <table class="table">
+    <legend>Tus Tableros</legend>
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Tareas</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tab in Model.ListaTabPropios)
+        {
+            <tr>
+                <td scope="row">@tab.Nombre</td>
+                <td>@tab.Descripcion</td>
+                <td>
+                    <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
+                    <a asp-controller="Tarea" asp-action="CrearTarea" asp-route-id="@tab.Id">Crear Tarea</a>
+                </td>
+                <td>
+                    <a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-id="@tab.Id">Editar</a>
+                    <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-id="@tab.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table">
+    <legend>Tableros en donde tienes tareas</legend>
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Tareas</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tab in Model.ListaTabNoPropios)
+        {
+            <tr>
+                <td scope="row">@tab.Nombre</td>
+                <td>@tab.Descripcion</td>
+                <td>
+                    <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
 
 
 @section Scripts{<partial name="_ValidationScriptsPartial"/>}

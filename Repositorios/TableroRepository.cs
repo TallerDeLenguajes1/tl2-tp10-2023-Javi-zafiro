@@ -67,6 +67,7 @@ public class TableroRepository : ITableroRepository
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
                 while(reader.Read()){
+                    tab= new tablero();
                     tab.Id=Convert.ToInt32(reader["id"]);
                     tab.IdUsuariPropietario=Convert.ToInt32(reader["id_usuario_asignado"]);
                     tab.Nombre=reader["nombre"].ToString();
@@ -75,13 +76,37 @@ public class TableroRepository : ITableroRepository
             }
             connection.Close();
         }
-        if (tab==null)
+        if (tab==null|| string.IsNullOrEmpty(tab.Nombre))
             throw new Exception("Tablero no encontrado.");
         return(tab);
     }
     public List<tablero> ListarTableros(){
          var query="SELECT * FROM tablero;";
         List<tablero> listaDeTableros = new List<tablero>();
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        {
+            connection.Open();
+            var command= new SQLiteCommand(query, connection);
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while(reader.Read()){
+                    var tab = new tablero();
+                    tab.Id = Convert.ToInt32(reader["id"]);
+                    tab.IdUsuariPropietario=Convert.ToInt32(reader["id_usuario_asignado"]);
+                    tab.Nombre=reader["nombre"].ToString();
+                    tab.Descripcion=reader["descripcion"].ToString();
+                    listaDeTableros.Add(tab);
+                }
+            }
+            connection.Close();
+        }
+        if (listaDeTableros.Count<=0)
+            throw new Exception("Lista Vacia.");
+        return (listaDeTableros);
+    }
+    public List<tablero> ListarTablerosPorTareas(List<tarea> list){
+        List<tablero> listaDeTableros = new List<tablero>();
+        var query="SELECT * FROM tablero WHERE id IN ("+ string.Join(",", list.Select(t=>t.IdTablero))+");";
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();

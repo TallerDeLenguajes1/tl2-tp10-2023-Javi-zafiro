@@ -10,6 +10,7 @@
             <th scope="col">Estado</th>
             <th scope="col">Id Del Usuario Asignado</th>
             <th scope="col">Id del Tablero</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,13 @@
                 <td>@tar.Estado.ToString()</td>
                 <td>@tar.Usuario_asignado</td>
                 <td>@tar.IdTablero</td>
+                <td>
+                    <a asp-controller="Tarea" asp-action="ModificarTarea" asp-route-id="@tar.Id">Editar</a>
+                    <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-id="@tar.Id">Eliminar</a>
+                    @if(tar.Usuario_asignado==0 || tar.Usuario_asignado==null){
+                        <a asp-controller="Tarea" asp-action="AsignarUsuario" asp-route-id="@tar.Id">Asignar Usuario</a>
+                    }
+                </td>
             </tr>
         }
     </tbody>

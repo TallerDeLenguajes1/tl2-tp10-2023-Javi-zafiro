@@ -9,12 +9,14 @@ namespace tl2_tp10_2023_Javi_zafiro.Controllers;
 public class TableroController : Controller
 {
     private readonly ITableroRepository _tableroRepositorio;
+    private readonly ITareaRepository _tareaRepositorio;
     private readonly ILogger<UsuarioController> _logger;
 
-    public TableroController(ILogger<UsuarioController> logger, ITableroRepository tableroRepositorio)
+    public TableroController(ILogger<UsuarioController> logger, ITableroRepository tableroRepositorio, ITareaRepository tareaRepositorio)
     {
         _logger = logger;
         _tableroRepositorio = tableroRepositorio;
+        _tareaRepositorio = tareaRepositorio;
     }
 
     public IActionResult Index()
@@ -30,18 +32,26 @@ public class TableroController : Controller
                 return RedirectToRoute(new{controller= "Login", action="index"});
             }else
             {
-                List<tablero> lista;
+                
                 if (HttpContext.Session.GetString("rol")==TiposUsuario.Administrador.ToString())
                 {
+                    List<tablero> lista;
                     lista= _tableroRepositorio.ListarTableros();
+                    return View(new ListaTablerosViewModel(lista));
                 }else
                 {
+                    List<tablero> listaPropios;
+                    List<tablero> listaNoPropios;
+                    List<tarea> list;
                     int idusu;
                     var id=HttpContext.Session.GetString("id");
                     int.TryParse(id, out idusu);
-                    lista = _tableroRepositorio.ListarTablerosDeUsuario(idusu);
+                    listaPropios = _tableroRepositorio.ListarTablerosDeUsuario(idusu);
+                    list=_tareaRepositorio.ListarTareasPorUsuario(idusu);
+                    listaNoPropios=_tableroRepositorio.ListarTablerosPorTareas(list);
+                    return View(new ListaTablerosViewModel(listaPropios, listaNoPropios));
                 }
-                return View(new ListaTodosTablerosViewModel(lista));
+                
             }
         }
         catch (Exception ex)
