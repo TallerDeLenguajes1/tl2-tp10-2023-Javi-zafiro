@@ -5,13 +5,19 @@
     <label asp-for="Descripcion"></label>
     <input asp-for="Descripcion" />
     <label asp-for="Color"></label>
-    <input asp-for="Color" />
+    <select asp-for="Color">
+        <option value="">Seleccione un color</option>
+        <option value="Azul">Azul</option>
+        <option value="Verde">Verde</option>
+        <option value="Amarillo">Amarillo</option>
+        <option value="Rojo">Rojo</option>
+        <option value="Negro">Negro</option>
+    </select>
     <label asp-for="Estado"></label>
     <select asp-for="Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
         <option value="">Seleccione un estado</option>
     </select>
-    <label asp-for="@Model.IdTablero"></label>
-    <input asp-for="@Model.IdTablero" />
+    <input asp-for="@Model.IdTablero" type="hidden"/>
     <button type="submit" class="btn btn-success"
         onclick="return confirm('¿Estás seguro de crear esta tarea?')">Agregar</button>
 </form>

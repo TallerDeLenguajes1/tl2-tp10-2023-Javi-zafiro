@@ -3,13 +3,11 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Id</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Color</th>
             <th scope="col">Estado</th>
-            <th scope="col">Id Del Usuario Asignado</th>
-            <th scope="col">Id del Tablero</th>
+            <th scope="col">CambiarEstado</th>
             <th></th>
         </tr>
     </thead>
@@ -17,18 +15,24 @@
         @foreach (var tar in Model.ListaTar)
         {
             <tr>
-                <th scope="row">@tar.Id</th>
-                <td>@tar.Nombre</td>
+                <td scope="row">@tar.Nombre</td>
                 <td>@tar.Descripcion</td>
                 <td>@tar.Color</td>
                 <td>@tar.Estado.ToString()</td>
-                <td>@tar.Usuario_asignado</td>
-                <td>@tar.IdTablero</td>
                 <td>
-                    <a asp-controller="Tarea" asp-action="ModificarTarea" asp-route-id="@tar.Id">Editar</a>
-                    <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-id="@tar.Id">Eliminar</a>
-                    @if(tar.Usuario_asignado==0 || tar.Usuario_asignado==null){
-                        <a asp-controller="Tarea" asp-action="AsignarUsuario" asp-route-id="@tar.Id">Asignar Usuario</a>
+                    @if(tar.Usuario_asignado==Model.IdLogeado || Model.Admin ||Model.IdPropietario==Model.IdLogeado){
+                        <a asp-controller="Tarea" asp-action="CambiarEstado" asp-route-id="@tar.Id">Cambiar Estado</a>
+                    }else{
+                        <p>No puede cambiar el estado</p>
+                    }
+                </td>
+                <td>
+                    @if(Model.Admin || Model.IdPropietario==Model.IdLogeado){
+                        <a asp-controller="Tarea" asp-action="ModificarTarea" asp-route-id="@tar.Id">Editar</a>
+                        <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-id="@tar.Id">Eliminar</a>
+                        @if(tar.Usuario_asignado==0 || tar.Usuario_asignado==null){
+                            <a asp-controller="Tarea" asp-action="AsignarUsuario" asp-route-id="@tar.Id">Asignar Usuario</a>
+                        }
                     }
                 </td>
             </tr>

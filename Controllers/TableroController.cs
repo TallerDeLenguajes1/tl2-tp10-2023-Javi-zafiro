@@ -48,8 +48,15 @@ public class TableroController : Controller
                     int.TryParse(id, out idusu);
                     listaPropios = _tableroRepositorio.ListarTablerosDeUsuario(idusu);
                     list=_tareaRepositorio.ListarTareasPorUsuario(idusu);
-                    listaNoPropios=_tableroRepositorio.ListarTablerosPorTareas(list);
-                    return View(new ListaTablerosViewModel(listaPropios, listaNoPropios));
+                    if (list.Count>0)
+                    {
+                        listaNoPropios=_tableroRepositorio.ListarTablerosPorTareas(list);
+                        listaNoPropios.RemoveAll(item => listaPropios.Exists(t => t.Id == item.Id));
+                        return View(new ListaTablerosViewModel(listaPropios, listaNoPropios));
+                    }else{
+                        return View(new ListaTablerosViewModel(listaPropios));
+                    }
+                    
                 }
                 
             }
@@ -153,7 +160,7 @@ public class TableroController : Controller
         try
         {
             _tableroRepositorio.BorrarTablero(tab.Id);
-            return RedirectToAction("ListarTableros");
+            return RedirectToAction("BorrarTareasTablero", "Tarea", new {id=tab.Id});
         }
         catch (Exception ex)
         {
@@ -161,7 +168,27 @@ public class TableroController : Controller
             return RedirectToAction("Error");
         }
     }
-
+    
+    public IActionResult EliminarTableroUsuario (int id){
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="index"});
+        try
+        {
+            var listaTab=_tableroRepositorio.ListarTablerosDeUsuario(id);
+            List<int> borrar = new List<int>();
+            foreach (var item in listaTab)
+            {
+                borrar.Add(item.Id);
+                _tableroRepositorio.BorrarTablero(item.Id);
+            }
+            return RedirectToAction("BorrarTareasTableros", "Tarea", new {lista = borrar});
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("ListarUsuarios", "Usuario");
+        }
+    }
+    
     public IActionResult Error(){
         return View(new ErrorViewModel());
     }

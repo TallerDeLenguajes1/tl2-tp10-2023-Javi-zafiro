@@ -1,0 +1,22 @@
+@model CambiarEstadoViewModel
+
+<h3>Modificar Tarea</h3>
+
+<div>
+    <p>Vamos a asignar un usiario a la tarea: @Model.Nombre, @Model.Descripcion</p>
+    <p>Seleccione en la lista el usuario que realizara esta tarea</p>
+</div>
+<form asp-controller="Tarea" asp-action="CambiarEstado">
+    <input asp-for="Id" type="hidden">
+    <input asp-for="@Model.Nombre" type="hidden"/>
+    <input asp-for="@Model.Descripcion" type="hidden"/>
+    <input asp-for="@Model.IdTablero" type="hidden"/>
+    <label asp-for="Estado"></label>
+    <select asp-for="@Model.Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
+        <option value="">Seleccione un estado</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Cambiar</button>
+    <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@Model.IdTablero" class="btn btn-primary">Cancelar</a>
+</form>
+
+@section Scripts{<partial name="_ValidationScriptsPartial"/>}

@@ -12,17 +12,31 @@
     <label asp-for="Descripcion"></label>
     <input asp-for="@Model.Descripcion" />
     <label asp-for="Color"></label>
-    <input asp-for="@Model.Color" />
+    <select asp-for="@Model.Color">
+        <option value="">Seleccione un color</option>
+        <option value="Azul">Azul</option>
+        <option value="Verde">Verde</option>
+        <option value="Amarillo">Amarillo</option>
+        <option value="Rojo">Rojo</option>
+        <option value="Negro">Negro</option>
+    </select>
     <label asp-for="Estado"></label>
     <select asp-for="@Model.Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
         <option value="">Seleccione un estado</option>
     </select>
-    <label asp-for="Usuario_asignado"></label>
-    <input asp-for="@Model.Usuario_asignado" />
-    <label asp-for="IdTablero"></label>
-    <input asp-for="@Model.IdTablero" />
+    <label asp-for="@Model.Usuario_asignado"></label>
+    <select asp-for="@Model.Usuario_asignado">
+        <option value="">Seleccione un Usuario</option>
+        @if(Model.Lista != null && Model.Lista.Any()) {
+            @foreach(var item in Model.Lista){
+                <option value="@item.Id">@item.NombreDeUsuario</option>
+            }
+        }
+    </select>
+    <input asp-for="@Model.IdTablero" type="hidden"/>
+    <input asp-for="@Model.Lista" type="hidden"/>
     <button type="submit" class="btn btn-primary" onclick="return confirm('estas seguro de cambiar esta tarea?')">Actualizar</button>
-    <a asp-controller="Tarea" asp-action="ListarTareas" class="btn btn-primary">Cancelar</a>
+    <a asp-controller="Tarea" asp-action="ListarTareasTablero" class="btn btn-primary" asp-route-id="@Model.IdTablero">Cancelar</a>
 </form>
 
 @section Scripts{<partial name="_ValidationScriptsPartial"/>}

@@ -2,10 +2,9 @@
 <H3>Listado de Tableros</H3>
 @if(Model.Admin){
     <table class="table">
-    <legend>Todos Los Tableros</legend>
+    <legend>Tableros</legend>
     <thead>
         <tr>
-            <th scope="col">Id</th>
             <th scope="col">Id Del Propietario</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripcion</th>
@@ -17,8 +16,7 @@
         @foreach (var tab in Model.ListaTabTodos)
         {
             <tr>
-                <th scope="row">@tab.Id</th>
-                <td>@tab.IdUsuariPropietario</td>
+                <td scope="row">@tab.IdUsuariPropietario</td>
                 <td>@tab.Nombre</td>
                 <td>@tab.Descripcion</td>
                 <td>

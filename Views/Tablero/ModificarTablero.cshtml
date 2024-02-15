@@ -7,8 +7,7 @@
 </div>
 <form asp-controller="Tablero" asp-action="ModificarTablero">
     <input asp-for="@Model.Id" type="hidden">
-    <label asp-for="@Model.IdUsuariPropietario"></label>
-    <input asp-for="@Model.IdUsuariPropietario" />
+    <input asp-for="@Model.IdUsuariPropietario" type="hidden"/>
     <label asp-for="@Model.Nombre"></label>
     <input asp-for="@Model.Nombre" />
     <label asp-for="@Model.Descripcion"></label>

@@ -20,9 +20,11 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <form asp-controller="Login" asp-action="CerrarSesion" method="post">
+                            @if(!string.IsNullOrEmpty(ViewContext.HttpContext.Session.GetString("usuario"))){
+                                <form asp-controller="Login" asp-action="CerrarSesion" method="post">
                                 <button class="nav-link text-dark" type="submit">Cerrar Sesión</button>
                             </form>
+                            }
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>

@@ -62,6 +62,27 @@ public class TareaRepository : ITareaRepository
             throw new Exception($"No se pudo modificar la tarea");
         }
     }
+
+    public void CambiarEstado(int idTarea, EstadoTarea estado){
+        try
+        {
+            var query="UPDATE tarea SET estado=@est WHERE id=@idtar";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command= new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@est", (int)estado));
+                command.Parameters.Add(new SQLiteParameter("@idtar", idTarea));
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        catch (System.Exception)
+        {
+            
+            throw new Exception($"No se pudo cambiar el estado");
+        }
+    }
     public tarea ObtenerTarea(int idTarea){
         tarea tar = null;
         var query="SELECT * FROM tarea WHERE id= @idtar;";
@@ -117,8 +138,6 @@ public class TareaRepository : ITareaRepository
             }
             connection.Close();
         }
-        if (listaDeTareasXUsuario.Count<=0)
-            throw new Exception("Lista Vacia");
         return (listaDeTareasXUsuario);
     }
     public List<tarea> ListarTareasPorTablero(int idTablero){
@@ -149,8 +168,6 @@ public class TareaRepository : ITareaRepository
             }
             connection.Close();
         }
-        if (listaDeTareasXTablero.Count<=0)
-            throw new Exception("Lista Vacia");
         return (listaDeTareasXTablero);
     }
     public void BorrarTarea(int idTarea){

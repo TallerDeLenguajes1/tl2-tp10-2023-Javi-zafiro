@@ -137,7 +137,7 @@ public class UsuarioController : Controller
         try
         {
             _usuarioRepositorio.BorrarUsuario(usu.Id);
-            return RedirectToAction("ListarUsuarios");
+            return RedirectToAction("EliminarTableroUsuario", "Tablero", new {id = usu.Id});
         }
         catch (Exception ex)
         {
