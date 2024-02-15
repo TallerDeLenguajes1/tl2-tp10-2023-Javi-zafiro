@@ -5,7 +5,7 @@
     <legend>Tableros</legend>
     <thead>
         <tr>
-            <th scope="col">Id Del Propietario</th>
+            <th scope="col">Usuario Propietario</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Tareas</th>
@@ -16,7 +16,7 @@
         @foreach (var tab in Model.ListaTabTodos)
         {
             <tr>
-                <td scope="row">@tab.IdUsuariPropietario</td>
+                <td scope="row">@tab.Usuario</td>
                 <td>@tab.Nombre</td>
                 <td>@tab.Descripcion</td>
                 <td>
@@ -66,6 +66,7 @@
         <tr>
             <th scope="col">Nombre</th>
             <th scope="col">Descripcion</th>
+            <th scope="col">Usuario Propietario</th>
             <th scope="col">Tareas</th>
         </tr>
     </thead>
@@ -75,6 +76,7 @@
             <tr>
                 <td scope="row">@tab.Nombre</td>
                 <td>@tab.Descripcion</td>
+                <td>@tab.Usuario</td>
                 <td>
                     <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
                 </td>

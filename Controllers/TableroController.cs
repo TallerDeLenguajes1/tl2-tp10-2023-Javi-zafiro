@@ -10,13 +10,15 @@ public class TableroController : Controller
 {
     private readonly ITableroRepository _tableroRepositorio;
     private readonly ITareaRepository _tareaRepositorio;
+    private readonly IUsuarioRepository _usuarioRepositorio;
     private readonly ILogger<UsuarioController> _logger;
 
-    public TableroController(ILogger<UsuarioController> logger, ITableroRepository tableroRepositorio, ITareaRepository tareaRepositorio)
+    public TableroController(ILogger<UsuarioController> logger, ITableroRepository tableroRepositorio, ITareaRepository tareaRepositorio, IUsuarioRepository usuarioRepositorio)
     {
         _logger = logger;
         _tableroRepositorio = tableroRepositorio;
         _tareaRepositorio = tareaRepositorio;
+        _usuarioRepositorio = usuarioRepositorio;
     }
 
     public IActionResult Index()
@@ -37,7 +39,13 @@ public class TableroController : Controller
                 {
                     List<tablero> lista;
                     lista= _tableroRepositorio.ListarTableros();
-                    return View(new ListaTablerosViewModel(lista));
+                    var listaVM = new ListaTablerosViewModel(lista, true);
+                    foreach (var item in listaVM.ListaTabTodos)
+                    {
+                        var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
+                        item.Usuario=usu.NombreDeUsuario;
+                    }
+                    return View(listaVM);
                 }else
                 {
                     List<tablero> listaPropios;
@@ -52,9 +60,26 @@ public class TableroController : Controller
                     {
                         listaNoPropios=_tableroRepositorio.ListarTablerosPorTareas(list);
                         listaNoPropios.RemoveAll(item => listaPropios.Exists(t => t.Id == item.Id));
-                        return View(new ListaTablerosViewModel(listaPropios, listaNoPropios));
+                        var listas = new ListaTablerosViewModel(listaPropios, listaNoPropios);
+                        foreach (var item in listas.ListaTabPropios)
+                        {
+                            var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
+                            item.Usuario=usu.NombreDeUsuario;
+                        }
+                        foreach (var item in listas.ListaTabNoPropios)
+                        {
+                            var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
+                            item.Usuario=usu.NombreDeUsuario;
+                        }
+                        return View(listas);
                     }else{
-                        return View(new ListaTablerosViewModel(listaPropios));
+                        var listaVM = new ListaTablerosViewModel(listaPropios, false);
+                        foreach (var item in listaVM.ListaTabPropios)
+                        {
+                            var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
+                            item.Usuario=usu.NombreDeUsuario;
+                        }
+                        return View(listaVM);
                     }
                     
                 }
