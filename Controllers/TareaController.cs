@@ -72,9 +72,9 @@ public class TareaController : Controller
                 int.TryParse(idSession, out idusu);
                 if (HttpContext.Session.GetString("rol")==TiposUsuario.Administrador.ToString())
                 {
-                    return View(new ListarTareasViewModel(lista, true, idPropietario, idusu));
+                    return View(new ListarTareasViewModel(lista, true, idPropietario, idusu, tab.Nombre));
                 }else{
-                    return View(new ListarTareasViewModel(lista, false, idPropietario, idusu));
+                    return View(new ListarTareasViewModel(lista, false, idPropietario, idusu, tab.Nombre));
                 }
             }
         }
