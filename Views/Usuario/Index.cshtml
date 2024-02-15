@@ -7,8 +7,7 @@
     
     <ul class="list-unstyled list-inline">
         <li><a asp-controller="Usuario" asp-action="ListarUsuarios">Listar Usuarios</a></li>
-        @if(ViewContext.HttpContext.Session.GetString("rol") == TiposUsuario.Administrador.ToString()){
-            <li><a asp-controller="Usuario" asp-action="CrearUsuario">Crear Usuario</a></li>
-        }
+        <li><a asp-controller="Usuario" asp-action="CrearUsuario">Crear Usuario</a></li>
+        
     </ul>
 </div>

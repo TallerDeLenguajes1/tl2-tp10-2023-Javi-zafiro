@@ -18,8 +18,8 @@
                 <td>@usu.NombreDeUsuario</td>
                 <td>@usu.Tipo</td>
                 <td>
-                    @if(Model.Adm==true){
-                        <a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-id="@usu.Id">Editar</a>
+                    <a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-id="@usu.Id">Editar</a>
+                    @if(usu.Tipo!=TiposUsuario.Administrador){
                         <a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-id="@usu.Id">Eliminar</a>
                     }
                 </td>

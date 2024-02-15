@@ -25,16 +25,15 @@ public class UsuarioController : Controller
     public IActionResult ListarUsuarios()
     {
         if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
+        if (HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString()) return RedirectToRoute(new{controller= "Home", action="Index"});
         try
         {
             var lista= _usuarioRepositorio.ListarUsuarios();
-            if (HttpContext.Session.GetString("rol") != TiposUsuario.Administrador.ToString())
+            if (lista.Count<=0)
             {
-                return View(new ListaUsuariosViewModel(lista, false));
-            }else
-            {
-                return View(new ListaUsuariosViewModel(lista, true));
+                throw new Exception("Lista Vacia");
             }
+            return View(new ListaUsuariosViewModel(lista));
         }
         catch (Exception ex)
         {
