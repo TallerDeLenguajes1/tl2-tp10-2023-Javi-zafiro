@@ -32,58 +32,82 @@
     </tbody>
 </table>
 }else{
+    @if(Model.ListaTabPropios.Count>0){
+        <table class="table">
+        <legend>Tus Tableros</legend>
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Tareas</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tab in Model.ListaTabPropios)
+            {
+                <tr>
+                    <td scope="row">@tab.Nombre</td>
+                    <td>@tab.Descripcion</td>
+                    <td>
+                        <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
+                        <a asp-controller="Tarea" asp-action="CrearTarea" asp-route-id="@tab.Id">Crear Tarea</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-id="@tab.Id">Editar</a>
+                        <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-id="@tab.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }else{
+        <h5>Tus Tableros</h5>
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-body">
+                    @await Html.PartialAsync("ErrorLista")
+                </div>
+            </div>
+        </div>
+    }
+    
+
+@if(Model.ListaTabNoPropios.Count>0){
     <table class="table">
-    <legend>Tus Tableros</legend>
-    <thead>
-        <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Tareas</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tab in Model.ListaTabPropios)
-        {
+        <legend>Tableros en donde tienes tareas</legend>
+        <thead>
             <tr>
-                <td scope="row">@tab.Nombre</td>
-                <td>@tab.Descripcion</td>
-                <td>
-                    <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
-                    <a asp-controller="Tarea" asp-action="CrearTarea" asp-route-id="@tab.Id">Crear Tarea</a>
-                </td>
-                <td>
-                    <a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-id="@tab.Id">Editar</a>
-                    <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-id="@tab.Id">Eliminar</a>
-                </td>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Usuario Propietario</th>
+                <th scope="col">Tareas</th>
             </tr>
-        }
-    </tbody>
-</table>
-<table class="table">
-    <legend>Tableros en donde tienes tareas</legend>
-    <thead>
-        <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Usuario Propietario</th>
-            <th scope="col">Tareas</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tab in Model.ListaTabNoPropios)
-        {
-            <tr>
-                <td scope="row">@tab.Nombre</td>
-                <td>@tab.Descripcion</td>
-                <td>@tab.Usuario</td>
-                <td>
-                    <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var tab in Model.ListaTabNoPropios)
+            {
+                <tr>
+                    <td scope="row">@tab.Nombre</td>
+                    <td>@tab.Descripcion</td>
+                    <td>@tab.Usuario</td>
+                    <td>
+                        <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}else{
+        <h5>Tus Tableros</h5>
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-body">
+                    @await Html.PartialAsync("../Tarea/ErrorListaUsuario");
+                </div>
+            </div>
+        </div>
+    }
 }
 
 

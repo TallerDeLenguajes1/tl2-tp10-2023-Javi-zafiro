@@ -100,8 +100,6 @@ public class TableroRepository : ITableroRepository
             }
             connection.Close();
         }
-        if (listaDeTableros.Count<=0)
-            throw new Exception("Lista Vacia.");
         return (listaDeTableros);
     }
     public List<tablero> ListarTablerosPorTareas(List<tarea> list){
@@ -149,8 +147,6 @@ public class TableroRepository : ITableroRepository
             }
             connection.Close();
         }
-        if (listaDeTableros.Count<=0)
-            throw new Exception("Lista Vacia.");
         return (listaDeTableros);
     }
     public void BorrarTablero(int idTablero){

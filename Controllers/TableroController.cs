@@ -40,10 +40,16 @@ public class TableroController : Controller
                     List<tablero> lista;
                     lista= _tableroRepositorio.ListarTableros();
                     var listaVM = new ListaTablerosViewModel(lista, true);
-                    foreach (var item in listaVM.ListaTabTodos)
+                    if (listaVM.ListaTabTodos.Count>0)
                     {
-                        var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
-                        item.Usuario=usu.NombreDeUsuario;
+                        foreach (var item in listaVM.ListaTabTodos)
+                        {
+                            var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
+                            item.Usuario=usu.NombreDeUsuario;
+                        }
+                    }else
+                    {
+                        _logger.LogWarning("Lista de Tableros Vacia");
                     }
                     return View(listaVM);
                 }else
@@ -61,11 +67,17 @@ public class TableroController : Controller
                         listaNoPropios=_tableroRepositorio.ListarTablerosPorTareas(list);
                         listaNoPropios.RemoveAll(item => listaPropios.Exists(t => t.Id == item.Id));
                         var listas = new ListaTablerosViewModel(listaPropios, listaNoPropios);
-                        foreach (var item in listas.ListaTabPropios)
+                        if (listas.ListaTabPropios.Count>0)
                         {
-                            var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
-                            item.Usuario=usu.NombreDeUsuario;
+                            foreach (var item in listas.ListaTabPropios)
+                            {
+                                var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
+                                item.Usuario=usu.NombreDeUsuario;
+                            }
+                        }else{
+                            _logger.LogWarning("Lista de Tableros Propios Vacia");
                         }
+                        
                         foreach (var item in listas.ListaTabNoPropios)
                         {
                             var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
@@ -73,6 +85,7 @@ public class TableroController : Controller
                         }
                         return View(listas);
                     }else{
+                        _logger.LogWarning("Lista de Tableros No Propios Vacia");
                         var listaVM = new ListaTablerosViewModel(listaPropios, false);
                         foreach (var item in listaVM.ListaTabPropios)
                         {
