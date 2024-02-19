@@ -1,4 +1,5 @@
 using tl2_tp10_2023_Javi_zafiro.Models;
+using tl2_tp10_2023_Javi_zafiro.ViewModels;
 using System.Data.SQLite;
 
 namespace repositorioParaKamba;
@@ -114,9 +115,9 @@ public class TareaRepository : ITareaRepository
             throw new Exception("No se encontro la tarea");
         return(tar);
     }
-    public List<tarea> ListarTareasPorUsuario(int idUsuario){
-        var query="SELECT * FROM tarea WHERE id_usuario_asignado = @idusu;";
-        List<tarea> listaDeTareasXUsuario = new List<tarea>();
+    public List<TareaViewModel> ListarTareasPorUsuario(int idUsuario){
+        var query="SELECT tarea.id AS id, id_tablero, tarea.nombre AS nombre, descripcion, estado, color, usuario.nombre AS usu FROM tarea INNER JOIN usuario on id_usuario_asignado=usuario.id WHERE id_usuario_asignado = @idusu;";
+        List<TareaViewModel> listaDeTareasXUsuario = new List<TareaViewModel>();
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
@@ -125,14 +126,15 @@ public class TareaRepository : ITareaRepository
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
                 while(reader.Read()){
-                    var tar = new tarea();
+                    var tar = new TareaViewModel();
                     tar.Id = Convert.ToInt32(reader["id"]);
                     tar.IdTablero=Convert.ToInt32(reader["id_tablero"]);
                     tar.Nombre=reader["nombre"].ToString();
                     tar.Descripcion=reader["descripcion"].ToString();
                     tar.Color =reader["color"].ToString();
                     tar.Estado=(EstadoTarea)Enum.Parse(typeof(EstadoTarea), reader["estado"].ToString());
-                    tar.Usuario_asignado=Convert.ToInt32(reader["id_usuario_asignado"]);
+                    //tar.Usuario_asignado=Convert.ToInt32(reader["id_usuario_asignado"]);
+                    tar.Nombre_usuario=reader["usu"].ToString();
                     listaDeTareasXUsuario.Add(tar);
                 }
             }
@@ -140,9 +142,9 @@ public class TareaRepository : ITareaRepository
         }
         return (listaDeTareasXUsuario);
     }
-    public List<tarea> ListarTareasPorTablero(int idTablero){
-        var query="SELECT * FROM tarea WHERE id_tablero = @idtab;";
-        List<tarea> listaDeTareasXTablero = new List<tarea>();
+    public List<TareaViewModel> ListarTareasPorTablero(int idTablero){
+        var query="SELECT tarea.id AS id, id_tablero, tarea.nombre AS nombre, descripcion, id_usuario_asignado, estado, color, usuario.nombre AS usu FROM tarea INNER JOIN usuario on id_usuario_asignado=usuario.id WHERE id_tablero = @idtab;";
+        List<TareaViewModel> listaDeTareasXTablero = new List<TareaViewModel>();
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
@@ -151,7 +153,7 @@ public class TareaRepository : ITareaRepository
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
                 while(reader.Read()){
-                    var tar = new tarea();
+                    var tar = new TareaViewModel();
                     tar.Id = Convert.ToInt32(reader["id"]);
                     tar.IdTablero=Convert.ToInt32(reader["id_tablero"]);
                     tar.Nombre=reader["nombre"].ToString();
@@ -160,8 +162,10 @@ public class TareaRepository : ITareaRepository
                     tar.Estado=(EstadoTarea)Enum.Parse(typeof(EstadoTarea), reader["estado"].ToString());
                     if (!reader.IsDBNull(reader.GetOrdinal("id_usuario_asignado"))) {
                         tar.Usuario_asignado = Convert.ToInt32(reader["id_usuario_asignado"]);
+                        tar.Nombre_usuario=reader["usu"].ToString();
                     } else {
                         tar.Usuario_asignado = null;
+                        tar.Nombre_usuario="Sin Asignar";
                     }
                     listaDeTareasXTablero.Add(tar);
                 }

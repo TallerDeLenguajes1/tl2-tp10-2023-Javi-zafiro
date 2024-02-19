@@ -5,7 +5,7 @@
 <div>
     <p>desea modificar este tablero: @Model.Nombre, @Model.Descripcion ?</p>
 </div>
-<form asp-controller="Tablero" asp-action="ModificarTablero">
+<form asp-controller="Tablero" asp-action="ModificarTablero" class="form-logger">
     <input asp-for="@Model.Id" type="hidden">
     <input asp-for="@Model.IdUsuariPropietario" type="hidden"/>
     <label asp-for="@Model.Nombre"></label>

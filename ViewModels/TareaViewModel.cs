@@ -12,6 +12,7 @@ public class TareaViewModel
     private EstadoTarea estado;
     private int? usuario_asignado;
     private List<usuario> lista;
+    private string? nombre_usuario;
 
     public int Id { get => id; set => id = value; }
 
@@ -34,6 +35,7 @@ public class TareaViewModel
     public EstadoTarea Estado { get => estado; set => estado = value; }
     
     public List<usuario> Lista { get => lista; set => lista = value; }
+    public string? Nombre_usuario { get => nombre_usuario; set => nombre_usuario = value; }
 
     public TareaViewModel(tarea tarea, List<usuario> list){
         this.id = tarea.Id;

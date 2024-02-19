@@ -1,7 +1,7 @@
 @model ListaUsuariosViewModel
     
 <h3>Listado de Usuarios</h3>
-<table class="table">
+<table class="table table-active table-striped table-sm text-center">
     <thead>
         <tr>
             <th scope="col">Id</th>
@@ -18,9 +18,9 @@
                 <td>@usu.NombreDeUsuario</td>
                 <td>@usu.Tipo</td>
                 <td>
-                    <a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-id="@usu.Id">Editar</a>
+                    <p><a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-id="@usu.Id">Editar</a></p>
                     @if(usu.Tipo!=TiposUsuario.Administrador){
-                        <a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-id="@usu.Id">Eliminar</a>
+                        <p><a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-id="@usu.Id">Eliminar</a></p>
                     }
                 </td>
             </tr>

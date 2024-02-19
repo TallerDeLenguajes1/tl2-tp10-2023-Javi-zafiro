@@ -49,6 +49,7 @@ public class LoginController : Controller
     public IActionResult CerrarSesion()
     {
         HttpContext.Session.Clear();
+        _logger.LogInformation($"El usuario cerro sesion");
         return RedirectToAction("Index");
     }
 

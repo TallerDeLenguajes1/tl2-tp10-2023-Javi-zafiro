@@ -23,6 +23,7 @@ public class TareaController : Controller
 
     public IActionResult Index()
     {
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         return View();
     }
     [HttpGet]
@@ -307,13 +308,16 @@ public class TareaController : Controller
     }
 
     public IActionResult Error(){
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         return View(new ErrorViewModel());
     }
     public IActionResult ErrorLista(int idtab){
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         return View(idtab);
     }
 
     public IActionResult ErrorListaUsuario(){
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         return View();
     }
 }

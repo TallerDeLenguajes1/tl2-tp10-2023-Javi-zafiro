@@ -5,7 +5,7 @@
 <div>
     <p>desea modificar esta tarea: @Model.Nombre, @Model.Descripcion ?</p>
 </div>
-<form asp-controller="Tarea" asp-action="ModificarTarea">
+<form asp-controller="Tarea" asp-action="ModificarTarea" class="form-logger">
     <input asp-for="Id" type="hidden">
     <label asp-for="Nombre"></label>
     <input asp-for="@Model.Nombre" />

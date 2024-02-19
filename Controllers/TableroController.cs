@@ -23,6 +23,7 @@ public class TableroController : Controller
 
     public IActionResult Index()
     {
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         return View();
     }
     [HttpGet]
@@ -56,7 +57,7 @@ public class TableroController : Controller
                 {
                     List<tablero> listaPropios;
                     List<tablero> listaNoPropios;
-                    List<tarea> list;
+                    List<TareaViewModel> list;
                     int idusu;
                     var id=HttpContext.Session.GetString("id");
                     int.TryParse(id, out idusu);
@@ -86,7 +87,7 @@ public class TableroController : Controller
                         return View(listas);
                     }else{
                         _logger.LogWarning("Lista de Tableros No Propios Vacia");
-                        var listaVM = new ListaTablerosViewModel(listaPropios, false);
+                        var listaVM = new ListaTablerosViewModel(listaPropios);
                         foreach (var item in listaVM.ListaTabPropios)
                         {
                             var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
@@ -228,10 +229,12 @@ public class TableroController : Controller
     }
     
     public IActionResult Error(){
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         return View(new ErrorViewModel());
     }
 
     public IActionResult ErrorLista(){
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         return View();
     }
 }

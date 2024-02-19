@@ -1,4 +1,5 @@
 using tl2_tp10_2023_Javi_zafiro.Models;
+using tl2_tp10_2023_Javi_zafiro.ViewModels;
 using System.Data.SQLite;
 
 namespace repositorioParaKamba;
@@ -102,7 +103,7 @@ public class TableroRepository : ITableroRepository
         }
         return (listaDeTableros);
     }
-    public List<tablero> ListarTablerosPorTareas(List<tarea> list){
+    public List<tablero> ListarTablerosPorTareas(List<TareaViewModel> list){
         List<tablero> listaDeTableros = new List<tablero>();
         var query="SELECT * FROM tablero WHERE id IN ("+ string.Join(",", list.Select(t=>t.IdTablero))+");";
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))

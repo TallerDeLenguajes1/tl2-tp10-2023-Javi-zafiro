@@ -1,7 +1,7 @@
 @model ListaTablerosViewModel
 <H3>Listado de Tableros</H3>
 @if(Model.Admin){
-    <table class="table">
+    <table class="table table-active table-striped table-sm text-center">
     <legend>Tableros</legend>
     <thead>
         <tr>
@@ -20,12 +20,12 @@
                 <td>@tab.Nombre</td>
                 <td>@tab.Descripcion</td>
                 <td>
-                    <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
-                    <a asp-controller="Tarea" asp-action="CrearTarea" asp-route-id="@tab.Id">Crear Tarea</a>
+                    <p><a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a></p>
+                    <p><a asp-controller="Tarea" asp-action="CrearTarea" asp-route-id="@tab.Id">Crear Tarea</a></p>
                 </td>
                 <td>
-                    <a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-id="@tab.Id">Editar</a>
-                    <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-id="@tab.Id">Eliminar</a>
+                    <p><a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-id="@tab.Id">Editar</a></p>
+                    <p><a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-id="@tab.Id">Eliminar</a></p>
                 </td>
             </tr>
         }
@@ -33,7 +33,7 @@
 </table>
 }else{
     @if(Model.ListaTabPropios.Count>0){
-        <table class="table">
+        <table class="table table-active table-striped table-sm text-center">
         <legend>Tus Tableros</legend>
         <thead>
             <tr>
@@ -50,12 +50,12 @@
                     <td scope="row">@tab.Nombre</td>
                     <td>@tab.Descripcion</td>
                     <td>
-                        <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a>
-                        <a asp-controller="Tarea" asp-action="CrearTarea" asp-route-id="@tab.Id">Crear Tarea</a>
+                        <p><a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@tab.Id">Lista De Tareas</a></p>
+                        <p><a asp-controller="Tarea" asp-action="CrearTarea" asp-route-id="@tab.Id">Crear Tarea</a></p>
                     </td>
                     <td>
-                        <a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-id="@tab.Id">Editar</a>
-                        <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-id="@tab.Id">Eliminar</a>
+                        <p><a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-id="@tab.Id">Editar</a></p>
+                        <p><a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-id="@tab.Id">Eliminar</a></p>
                     </td>
                 </tr>
             }
@@ -74,7 +74,7 @@
     
 
 @if(Model.ListaTabNoPropios.Count>0){
-    <table class="table">
+    <table class="table table-active table-striped table-sm text-center">
         <legend>Tableros en donde tienes tareas</legend>
         <thead>
             <tr>
@@ -99,11 +99,11 @@
         </tbody>
     </table>
 }else{
-        <h5>Tus Tableros</h5>
+        <h5>Tableros en donde tienes tareas</h5>
         <div class="container mt-5">
             <div class="card">
                 <div class="card-body">
-                    @await Html.PartialAsync("../Tarea/ErrorListaUsuario");
+                    @Html.Partial("../Tarea/ErrorListaUsuario");
                 </div>
             </div>
         </div>

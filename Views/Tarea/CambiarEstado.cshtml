@@ -1,10 +1,9 @@
 @model CambiarEstadoViewModel
 
-<h3>Modificar Tarea</h3>
+<h3>Cambiar Estado</h3>
 
 <div>
-    <p>Vamos a asignar un usiario a la tarea: @Model.Nombre, @Model.Descripcion</p>
-    <p>Seleccione en la lista el usuario que realizara esta tarea</p>
+    <p>Vamos a cambiar el estado a la tarea: @Model.Nombre, @Model.Descripcion</p>
 </div>
 <form asp-controller="Tarea" asp-action="CambiarEstado">
     <input asp-for="Id" type="hidden">

@@ -10,22 +10,24 @@ public class ListarTareasViewModel
     private int? idLogeado;
     private string? tablero;
     
-    public ListarTareasViewModel(List<tarea> tareas, bool ad)
+    public ListarTareasViewModel(List<TareaViewModel> tareas, bool ad)
     {
-        this.listaTar= new List<TareaViewModel>();
+        this.listaTar=tareas; //new List<TareaViewModel>();
+        /*
         foreach (var item in tareas)
         {
             listaTar.Add(new TareaViewModel(item));
         }
-        this.admin=ad;
+        this.admin=ad;*/
     }
-    public ListarTareasViewModel(List<tarea> tareas, bool ad, int usu, int usuLog, string tab)
+    public ListarTareasViewModel(List<TareaViewModel> tareas, bool ad, int usu, int usuLog, string tab)
     {
-        this.listaTar= new List<TareaViewModel>();
+        this.listaTar= tareas;//new List<TareaViewModel>();
+        /*
         foreach (var item in tareas)
         {
             listaTar.Add(new TareaViewModel(item));
-        }
+        }*/
         this.admin=ad;
         this.IdPropietario=usu;
         this.idLogeado=usuLog;

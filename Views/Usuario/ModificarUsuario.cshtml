@@ -5,7 +5,7 @@
 <div>
     <p>desea cambiar el nombre de este usuario: @Model.NombreDeUsuario ?</p>
 </div>
-<form asp-controller="Usuario" asp-action="ModificarUsuario">
+<form asp-controller="Usuario" asp-action="ModificarUsuario" class="form-logger">
     <input asp-for="@Model.Id" value="@Model.Id" type="hidden">
     <label asp-for="@Model.NombreDeUsuario"></label>
     <input asp-for="@Model.NombreDeUsuario" value="@Model.NombreDeUsuario" />

@@ -21,6 +21,7 @@ public class HomeController : Controller
 
     public IActionResult Privacy()
     {
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
         return View();
     }
 

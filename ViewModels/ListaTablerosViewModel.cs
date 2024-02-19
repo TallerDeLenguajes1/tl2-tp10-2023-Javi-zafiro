@@ -39,6 +39,16 @@ public class ListaTablerosViewModel
         }
         this.Admin=ad;
     }
+    public ListaTablerosViewModel(List<tablero> tableros)
+    {
+        this.ListaTabPropios=new List<TableroListaViewModel>();
+        this.ListaTabNoPropios=new List<TableroListaViewModel>();
+        foreach (var item in tableros)
+        {
+            ListaTabPropios.Add(new TableroListaViewModel(item));
+        }
+        this.Admin=false;
+    }
     public ListaTablerosViewModel()
     {
     }

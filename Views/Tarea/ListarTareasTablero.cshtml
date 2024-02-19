@@ -1,11 +1,12 @@
 @model ListarTareasViewModel
 <H3>Tareas del Tablero @Model.Tablero</H3>
-<table class="table">
+<table class="table table-active table-striped table-sm text-center">
     <thead>
         <tr>
             <th scope="col">Nombre</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Color</th>
+            <th scope="col">Usuario Asignado</th>
             <th scope="col">Estado</th>
             <th scope="col">CambiarEstado</th>
             <th></th>
@@ -18,6 +19,7 @@
                 <td scope="row">@tar.Nombre</td>
                 <td>@tar.Descripcion</td>
                 <td>@tar.Color</td>
+                <td>@tar.Nombre_usuario</td>
                 <td>@tar.Estado.ToString()</td>
                 <td>
                     @if(tar.Usuario_asignado==Model.IdLogeado || Model.Admin ||Model.IdPropietario==Model.IdLogeado){
@@ -28,10 +30,10 @@
                 </td>
                 <td>
                     @if(Model.Admin || Model.IdPropietario==Model.IdLogeado){
-                        <a asp-controller="Tarea" asp-action="ModificarTarea" asp-route-id="@tar.Id">Editar</a>
-                        <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-id="@tar.Id">Eliminar</a>
+                        <p><a asp-controller="Tarea" asp-action="ModificarTarea" asp-route-id="@tar.Id">Editar</a></p>
+                        <p><a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-id="@tar.Id">Eliminar</a></p>
                         @if(tar.Usuario_asignado==0 || tar.Usuario_asignado==null){
-                            <a asp-controller="Tarea" asp-action="AsignarUsuario" asp-route-id="@tar.Id">Asignar Usuario</a>
+                            <p><a asp-controller="Tarea" asp-action="AsignarUsuario" asp-route-id="@tar.Id">Asignar Usuario</a></p>
                         }
                     }
                 </td>
