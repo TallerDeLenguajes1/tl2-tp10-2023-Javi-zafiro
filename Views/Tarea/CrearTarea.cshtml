@@ -1,25 +1,28 @@
 @model CrearTareaViewModel
+<h3>Crear Tarea</h3>
+
 <form asp-controller="Tarea" asp-action="CrearTarea" class="form-logger">
-    <label asp-for="Nombre"></label>
-    <input asp-for="Nombre" />
-    <label asp-for="Descripcion"></label>
-    <input asp-for="Descripcion" />
-    <label asp-for="Color"></label>
-    <select asp-for="Color">
-        <option value="">Seleccione un color</option>
-        <option value="Azul">Azul</option>
-        <option value="Verde">Verde</option>
-        <option value="Amarillo">Amarillo</option>
-        <option value="Rojo">Rojo</option>
-        <option value="Negro">Negro</option>
+    <label asp-for="@Model.Nombre"></label>
+    <input asp-for="@Model.Nombre" />
+    <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+    <label asp-for="@Model.Descripcion"></label>
+    <input asp-for="@Model.Descripcion" />
+    <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+    <label asp-for="@Model.Color"> Urgencia</label>
+    <select asp-for="@Model.Color">
+        <option value="">Seleccione un nivel</option>
+        <option value="Verde">Baja</option>
+        <option value="Amarillo">Media</option>
+        <option value="Rojo">Alta</option>
     </select>
-    <label asp-for="Estado"></label>
-    <select asp-for="Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
+    <span asp-validation-for="@Model.Color" class="text-danger"></span>
+    <label asp-for="@Model.Estado"></label>
+    <select asp-for="@Model.Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
         <option value="">Seleccione un estado</option>
     </select>
+    <span asp-validation-for="@Model.Estado" class="text-danger"></span>
     <input asp-for="@Model.IdTablero" type="hidden"/>
-    <button type="submit" class="btn btn-success"
-        onclick="return confirm('¿Estás seguro de crear esta tarea?')">Agregar</button>
+    <button type="submit" class="btn btn-success">Agregar</button>
 </form>
 
 @section Scripts{<partial name="_ValidationScriptsPartial"/>}

@@ -7,23 +7,25 @@
 </div>
 <form asp-controller="Tarea" asp-action="ModificarTarea" class="form-logger">
     <input asp-for="Id" type="hidden">
-    <label asp-for="Nombre"></label>
+    <label asp-for="@Model.Nombre"></label>
     <input asp-for="@Model.Nombre" />
-    <label asp-for="Descripcion"></label>
+    <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+    <label asp-for="@Model.Descripcion"></label>
     <input asp-for="@Model.Descripcion" />
-    <label asp-for="Color"></label>
+    <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+    <label asp-for="@Model.Color">Urgencia</label>
     <select asp-for="@Model.Color">
-        <option value="">Seleccione un color</option>
-        <option value="Azul">Azul</option>
-        <option value="Verde">Verde</option>
-        <option value="Amarillo">Amarillo</option>
-        <option value="Rojo">Rojo</option>
-        <option value="Negro">Negro</option>
+        <option value="">Seleccione un nivel</option>
+        <option value="Verde">Baja</option>
+        <option value="Amarillo">Media</option>
+        <option value="Rojo">Alta</option>
     </select>
-    <label asp-for="Estado"></label>
+    <span asp-validation-for="@Model.Color" class="text-danger"></span>
+    <label asp-for="@Model.Estado"></label>
     <select asp-for="@Model.Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
         <option value="">Seleccione un estado</option>
     </select>
+    <span asp-validation-for="@Model.Estado" class="text-danger"></span>
     <label asp-for="@Model.Usuario_asignado"></label>
     <select asp-for="@Model.Usuario_asignado">
         <option value="">Seleccione un Usuario</option>
@@ -33,9 +35,10 @@
             }
         }
     </select>
+    <span asp-validation-for="@Model.Usuario_asignado" class="text-danger"></span>
     <input asp-for="@Model.IdTablero" type="hidden"/>
     <input asp-for="@Model.Lista" type="hidden"/>
-    <button type="submit" class="btn btn-primary" onclick="return confirm('estas seguro de cambiar esta tarea?')">Actualizar</button>
+    <button type="submit" class="btn btn-primary" >Actualizar</button>
     <a asp-controller="Tarea" asp-action="ListarTareasTablero" class="btn btn-primary" asp-route-id="@Model.IdTablero">Cancelar</a>
 </form>
 

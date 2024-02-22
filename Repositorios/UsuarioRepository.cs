@@ -104,7 +104,7 @@ public class UsuarioRepository : IUsuarioRepository
     }
 
     public usuario ObtenerUsuarioLogin(string nombre, string contrasenia){
-        var usu = new usuario();
+        usuario usu= null;
         var query="SELECT * FROM usuario WHERE nombre= @nombre AND contrasenia=@contra;";
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
@@ -114,17 +114,20 @@ public class UsuarioRepository : IUsuarioRepository
             command.Parameters.Add(new SQLiteParameter("@contra", contrasenia));
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
-                while(reader.Read()){
-                    usu.Id=Convert.ToInt32(reader["id"]);
-                    usu.NombreDeUsuario=reader["nombre"].ToString();
-                    usu.Tipo=(TiposUsuario)Enum.Parse(typeof(TiposUsuario), reader["tipo"].ToString());
+                if (reader.Read())
+                {
+                    usu= new usuario
+                    {
+                        Id=Convert.ToInt32(reader["id"]),
+                        NombreDeUsuario=reader["nombre"].ToString(),
+                        Tipo=(TiposUsuario)Enum.Parse(typeof(TiposUsuario), reader["tipo"].ToString())
+                    };
                 }
+                
             }
             connection.Close();
         }
-        if (usu==null)
-            throw new Exception("Usuario no encontrado.");
-        return(usu);
+        return usu;
     }
     public void BorrarUsuario(int idUsuario){
         try

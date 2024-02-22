@@ -19,15 +19,24 @@ public class LoginController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        return View(new LoginViewModel());
     }
 
     [HttpPost]
     public IActionResult ComprobarUsuario(LoginViewModel usu){
-        if(!ModelState.IsValid) return RedirectToAction("Index");
         try
         {
+            //if (!ModelState.IsValid) return RedirectToAction("Index");
             var log = _usuarioRepositorio.ObtenerUsuarioLogin(usu.Nombre, usu.Contrasenia);
+            if (log == null) 
+            {
+                _logger.LogWarning("Intento de acceso invalido - Usuario:" + usu.Nombre + " Clave ingresada: " + usu.Contrasenia);
+                var loginVMMensaje = new LoginViewModel
+                {
+                    MensajeError = "Usuario o Contraseña no válido"
+                };
+                return View("Index",loginVMMensaje);
+            }
             LoguearUsuario(log);
             _logger.LogInformation($"El usuario {usu.Nombre} ingreso correctamente");
             return RedirectToRoute(new{controller="Home", action="Index"});

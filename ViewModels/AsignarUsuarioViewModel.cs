@@ -19,7 +19,7 @@ public class AsignarUsuarioViewModel
 
     [Display(Name = "Descripción de la tarea")]
     public string Descripcion { get => descripcion; set => descripcion = value; }
-
+    
     [Display(Name = "Usuario a asignar")]
     public int? Usuario_asignado { get => usuario_asignado; set => usuario_asignado = value; }
     public List<usuario> Lista { get => lista; set => lista = value; }

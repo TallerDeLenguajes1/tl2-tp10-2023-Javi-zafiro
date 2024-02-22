@@ -1,19 +1,21 @@
 @model UsuarioViewModel
 
-<h3>Modificar usuario</h3>
+<h3>Modificar Usuario</h3>
 
 <div>
-    <p>desea cambiar el nombre de este usuario: @Model.NombreDeUsuario ?</p>
+    <p>Usuario: @Model.NombreDeUsuario ?</p>
 </div>
 <form asp-controller="Usuario" asp-action="ModificarUsuario" class="form-logger">
     <input asp-for="@Model.Id" value="@Model.Id" type="hidden">
     <label asp-for="@Model.NombreDeUsuario"></label>
     <input asp-for="@Model.NombreDeUsuario" value="@Model.NombreDeUsuario" />
+    <span asp-validation-for="@Model.NombreDeUsuario" class="text-danger"></span>
     <label asp-for="@Model.Tipo"></label>
     <select asp-for="@Model.Tipo" asp-items="Html.GetEnumSelectList<TiposUsuario>()">
         <option value="">Seleccione un estado</option>
     </select>
-    <button type="submit" class="btn btn-primary" onclick="return confirm('estas seguro de cambiar este usuario?')">Actualizar</button>
+    <span asp-validation-for="@Model.Tipo" class="text-danger"></span>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
     <a asp-controller="Usuario" asp-action="ListarUsuarios" class="btn btn-primary">Cancelar</a>
 </form>
 

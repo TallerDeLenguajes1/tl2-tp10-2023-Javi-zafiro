@@ -8,6 +8,7 @@ public class ListarTareasViewModel
     private bool admin;
     private int? idPropietario;
     private int? idLogeado;
+    private int? idTablero;
     private string? tablero;
     
     public ListarTareasViewModel(List<TareaViewModel> tareas, bool ad)
@@ -20,7 +21,7 @@ public class ListarTareasViewModel
         }
         this.admin=ad;*/
     }
-    public ListarTareasViewModel(List<TareaViewModel> tareas, bool ad, int usu, int usuLog, string tab)
+    public ListarTareasViewModel(List<TareaViewModel> tareas, bool ad, int usu, int usuLog, string tab, int idTab)
     {
         this.listaTar= tareas;//new List<TareaViewModel>();
         /*
@@ -32,6 +33,7 @@ public class ListarTareasViewModel
         this.IdPropietario=usu;
         this.idLogeado=usuLog;
         this.tablero=tab;
+        this.idTablero=idTab;
     }
     public ListarTareasViewModel()
     {
@@ -41,5 +43,6 @@ public class ListarTareasViewModel
     public bool Admin { get => admin; set => admin = value; }
     public int? IdPropietario { get => idPropietario; set => idPropietario = value; }
     public int? IdLogeado { get => idLogeado; set => idLogeado = value; }
+    public int? IdTablero { get => idTablero; set => idTablero = value; }
     public string? Tablero { get => tablero; set => tablero = value; }
 }

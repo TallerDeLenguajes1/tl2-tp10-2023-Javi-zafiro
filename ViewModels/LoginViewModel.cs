@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 public class LoginViewModel
 {
+    public string MensajeError { get; set; }
+    public bool TieneMensajeError=> !string.IsNullOrEmpty(MensajeError);
+
     private string nombre;
     private string contrasenia;
 
@@ -11,6 +14,7 @@ public class LoginViewModel
     [Display(Name = "Nombre de usuario")]
     public string Nombre { get => nombre; set => nombre = value; }
     
+    [Required(ErrorMessage = "Este campo es requerido")]
     [Display(Name = "Contraseña")]
     [MinLength(4, ErrorMessage = "Como minimo 4 caracteres")]
     public string Contrasenia { get => contrasenia; set => contrasenia = value; }

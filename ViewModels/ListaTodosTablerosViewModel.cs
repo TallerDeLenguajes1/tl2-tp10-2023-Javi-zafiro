@@ -4,18 +4,38 @@ using System.ComponentModel.DataAnnotations;
 
 public class ListaTodosTablerosViewModel
 {
-    private List<TableroViewModel> listaTab;
+    private List<TableroListaViewModel> listaTabPropios;
+    private List<TableroListaViewModel> listaTabNoPropios;
 
-    public ListaTodosTablerosViewModel(List<tablero> tableros)
+
+
+    public List<TableroListaViewModel> ListaTabPropios { get => listaTabPropios; set => listaTabPropios = value; }
+    public List<TableroListaViewModel> ListaTabNoPropios { get => listaTabNoPropios; set => listaTabNoPropios = value; }
+
+
+    public ListaTodosTablerosViewModel(List<tablero> tablerosPropios, List<tablero> tablerosNoPropios)
     {
-        this.listaTab=new List<TableroViewModel>();
-        foreach (var item in tableros)
+        this.ListaTabPropios=new List<TableroListaViewModel>();
+        foreach (var item in tablerosPropios)
         {
-            ListaTab.Add(new TableroViewModel(item));
+            ListaTabPropios.Add(new TableroListaViewModel(item));
+        }
+
+        this.ListaTabNoPropios=new List<TableroListaViewModel>();
+        foreach (var item in tablerosNoPropios)
+        {
+            ListaTabNoPropios.Add(new TableroListaViewModel(item));
         }
     }
-
-    public List<TableroViewModel> ListaTab { get => listaTab; set => listaTab = value; }
+    public ListaTodosTablerosViewModel(List<tablero> tableros)
+    {
+        this.ListaTabPropios=new List<TableroListaViewModel>();
+        this.ListaTabNoPropios=new List<TableroListaViewModel>();
+        foreach (var item in tableros)
+        {
+            ListaTabPropios.Add(new TableroListaViewModel(item));
+        }
+    }
     public ListaTodosTablerosViewModel()
     {
     }

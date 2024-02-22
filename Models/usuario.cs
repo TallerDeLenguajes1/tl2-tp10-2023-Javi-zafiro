@@ -26,5 +26,7 @@ public class usuario
         this.tipo = usuario.Tipo;
     }
 
-    public usuario(){}
+    public usuario(){
+        
+    }
 }

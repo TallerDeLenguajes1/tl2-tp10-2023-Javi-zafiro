@@ -19,6 +19,7 @@ public class UsuarioViewModel
     [Display(Name = "Tipo de usuario")]
     public TiposUsuario Tipo { get => tipo; set => tipo = value; }
 
+    [Required(ErrorMessage = "Este campo es requerido")]
     [Display(Name = "Contraseña")]
     [MinLength(4, ErrorMessage = "Como minimo 4 caracteres")]
     public string Contrasenia { get => contrasenia; set => contrasenia = value; }

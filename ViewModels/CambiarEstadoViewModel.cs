@@ -19,6 +19,7 @@ public class CambiarEstadoViewModel
     [Display(Name = "Descripción de la tarea")]
     public string Descripcion { get => descripcion; set => descripcion = value; }
     public int? IdTablero { get => idTablero; set => idTablero = value; }
+    [Required(ErrorMessage = "No puede haber tarea sin estado")]
     public EstadoTarea Estado { get => estado; set => estado = value; }
 
     public CambiarEstadoViewModel(tarea tarea){

@@ -73,9 +73,9 @@ public class TareaController : Controller
                 int.TryParse(idSession, out idusu);
                 if (HttpContext.Session.GetString("rol")==TiposUsuario.Administrador.ToString())
                 {
-                    return View(new ListarTareasViewModel(lista, true, idPropietario, idusu, tab.Nombre));
+                    return View(new ListarTareasViewModel(lista, true, idPropietario, idusu, tab.Nombre, id));
                 }else{
-                    return View(new ListarTareasViewModel(lista, false, idPropietario, idusu, tab.Nombre));
+                    return View(new ListarTareasViewModel(lista, false, idPropietario, idusu, tab.Nombre, id));
                 }
             }
         }
@@ -109,7 +109,7 @@ public class TareaController : Controller
             if (ModelState.IsValid)
             {
                 _tareaRepositorio.CrearTarea(new tarea(tar));
-                return RedirectToRoute(new{controller= "Tablero", action="ListarTableros"});
+                return RedirectToAction("ListarTareasTablero", new {id=tar.IdTablero});
             }
         return View(tar) ;
         }

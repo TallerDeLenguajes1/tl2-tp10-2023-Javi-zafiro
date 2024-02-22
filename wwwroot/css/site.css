@@ -1,3 +1,4 @@
+
 html {
   font-size: 14px;
 }
@@ -19,4 +20,29 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color:darkgray;
+}
+
+.ocultar_msj {
+  display: none;
+}
+
+.custom_bg{
+  background-color: #258cfb;
+}
+
+.custom_text_color{
+  color: crimson;
+}
+
+.Verde{
+  color: green;
+}
+
+.Amarillo{
+  color: yellow;
+}
+
+.Rojo{
+  color: red;
 }

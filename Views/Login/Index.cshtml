@@ -1,5 +1,13 @@
-@model login
+@model LoginViewModel
 <h1 class="text-center">Kanban</h1>
+<h2 class="text-center">Login</h2>
+
+@if (Model.TieneMensajeError)
+{
+    <div id="mensajeTemporal" class="alert alert-danger mensajes-form">
+        @Model.MensajeError
+    </div>
+}
 <section>
     <article>
         <form asp-controller="Login" asp-action="ComprobarUsuario" class="form-logger">
@@ -17,3 +25,17 @@
         </form>
     </article>
 </section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var mensajeTemporal = document.getElementById('mensajeTemporal');
+        if (mensajeTemporal) {
+            setTimeout(function () {
+                mensajeTemporal.classList.add('ocultar_msj');
+            }, 5000);
+        }
+    });
+</script>

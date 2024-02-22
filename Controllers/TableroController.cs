@@ -27,6 +27,45 @@ public class TableroController : Controller
         return View();
     }
     [HttpGet]
+    public IActionResult ListarTablerosAdmin(){
+        if(string.IsNullOrEmpty(HttpContext.Session.GetString("usuario"))) return RedirectToRoute(new{controller= "Login", action="Index"});
+        try
+        {
+            List<tablero> lista;
+            List<tablero> listaPropios;
+            int idusu;
+            var id=HttpContext.Session.GetString("id");
+            int.TryParse(id, out idusu);
+            listaPropios = _tableroRepositorio.ListarTablerosDeUsuario(idusu);
+            lista= _tableroRepositorio.ListarTableros();
+            if (listaPropios.Count>0)
+            {
+                if(lista.Count>0){
+                    lista.RemoveAll(item => listaPropios.Exists(t => t.Id == item.Id));
+                }else{
+                    _logger.LogWarning("Lista de Tableros no Propios Vacia");
+                }
+                
+            }else{
+                _logger.LogWarning("Lista de Tus Tableros Vacia");
+            }
+            var listaVM = new ListaTodosTablerosViewModel(listaPropios, lista);
+            if (listaVM.ListaTabNoPropios.Count>0)
+            {
+                foreach (var item in listaVM.ListaTabNoPropios)
+                {
+                    var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
+                    item.Usuario=usu.NombreDeUsuario;
+                }
+            }
+            return View(listaVM);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return RedirectToAction("ErrorLista");
+        }
+    }
     public IActionResult ListarTableros()
     {
         try
@@ -38,21 +77,7 @@ public class TableroController : Controller
                 
                 if (HttpContext.Session.GetString("rol")==TiposUsuario.Administrador.ToString())
                 {
-                    List<tablero> lista;
-                    lista= _tableroRepositorio.ListarTableros();
-                    var listaVM = new ListaTablerosViewModel(lista, true);
-                    if (listaVM.ListaTabTodos.Count>0)
-                    {
-                        foreach (var item in listaVM.ListaTabTodos)
-                        {
-                            var usu = _usuarioRepositorio.ObtenerUsuario(item.IdUsuariPropietario);
-                            item.Usuario=usu.NombreDeUsuario;
-                        }
-                    }else
-                    {
-                        _logger.LogWarning("Lista de Tableros Vacia");
-                    }
-                    return View(listaVM);
+                    return RedirectToAction("ListarTablerosAdmin");
                 }else
                 {
                     List<tablero> listaPropios;

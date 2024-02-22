@@ -10,9 +10,11 @@
     <input asp-for="@Model.IdUsuariPropietario" type="hidden"/>
     <label asp-for="@Model.Nombre"></label>
     <input asp-for="@Model.Nombre" />
+    <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
     <label asp-for="@Model.Descripcion"></label>
     <input asp-for="@Model.Descripcion" />
-    <button type="submit" class="btn btn-primary" onclick="return confirm('estas seguro de cambiar este tablero?')">Actualizar</button>
+    <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+    <button type="submit" class="btn btn-primary" >Actualizar</button>
     <a asp-controller="Tablero" asp-action="ListarTableros" class="btn btn-primary">Cancelar</a>
 </form>
 

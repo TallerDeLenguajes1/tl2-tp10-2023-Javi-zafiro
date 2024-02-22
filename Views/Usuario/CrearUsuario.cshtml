@@ -1,15 +1,19 @@
 @model UsuarioViewModel
+<h3>Crear Usuario</h3>
+
 <form asp-controller="Usuario" asp-action="CrearUsuario" class="form-logger">
-    <label asp-for="NombreDeUsuario"></label>
-    <input asp-for="NombreDeUsuario" />
-    <label asp-for="Contrasenia"></label>
-    <input asp-for="Contrasenia" />
-    <label asp-for="Tipo"></label>
-    <select asp-for="Tipo" asp-items="Html.GetEnumSelectList<TiposUsuario>()">
+    <label asp-for="@Model.NombreDeUsuario"></label>
+    <input asp-for="@Model.NombreDeUsuario" />
+    <span asp-validation-for="@Model.NombreDeUsuario" class="text-danger"></span>
+    <label asp-for="@Model.Contrasenia"></label>
+    <input asp-for="@Model.Contrasenia" />
+    <span asp-validation-for="@Model.Contrasenia" class="text-danger"></span>
+    <label asp-for="@Model.Tipo"></label>
+    <select asp-for="@Model.Tipo" asp-items="Html.GetEnumSelectList<TiposUsuario>()">
         <option value="">Seleccione un estado</option>
     </select>
-    <button type="submit" class="btn btn-success"
-        onclick="return confirm('¿Estás seguro de crear el usuario?')">Agregar</button>
+    <span asp-validation-for="@Model.Tipo" class="text-danger"></span>
+    <button type="submit" class="btn btn-success">Agregar</button>
 </form>
 
 @section Scripts{<partial name="_ValidationScriptsPartial"/>}

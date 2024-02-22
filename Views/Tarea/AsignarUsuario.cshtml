@@ -20,6 +20,7 @@
             }
         }
     </select>
+    <span asp-validation-for="@Model.Usuario_asignado" class="text-danger"></span>
     <button type="submit" class="btn btn-primary">Asignar</button>
     <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@Model.IdTablero" class="btn btn-primary">Cancelar</a>
 </form>

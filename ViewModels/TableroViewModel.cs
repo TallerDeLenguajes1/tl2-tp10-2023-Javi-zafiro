@@ -7,7 +7,7 @@ public class TableroViewModel
     private int id;
     private int idUsuariPropietario;
     private string nombre;
-    private string descripcion;
+    private string? descripcion;
 
     public int Id { get => id; set => id = value; }
     
@@ -20,7 +20,7 @@ public class TableroViewModel
     public string Nombre { get => nombre; set => nombre = value; }
     
     [Display(Name = "Descripción del tablero")]
-    public string Descripcion { get => descripcion; set => descripcion = value; }
+    public string? Descripcion { get => descripcion; set => descripcion = value; }
 
     public TableroViewModel(tablero tablero){
         this.id = tablero.Id;

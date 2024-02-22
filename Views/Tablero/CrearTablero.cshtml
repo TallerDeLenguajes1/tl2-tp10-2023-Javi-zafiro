@@ -1,12 +1,15 @@
 @model CrearTableroViewModel
+<h3>Crear Tablero</h3>
+
 <form asp-controller="Tablero" asp-action="CrearTablero" class="form-logger">
     <input asp-for="@Model.IdUsuariPropietario" type="hidden" />
-    <label asp-for="Nombre"></label>
-    <input asp-for="Nombre" />
-    <label asp-for="Descripcion"></label>
-    <input asp-for="Descripcion" />
-    <button type="submit" class="btn btn-success"
-        onclick="return confirm('¿Estás seguro de crear el usuario?')">Agregar</button>
+    <label asp-for="@Model.Nombre"></label>
+    <input asp-for="@Model.Nombre" />
+    <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+    <label asp-for="@Model.Descripcion"></label>
+    <input asp-for="@Model.Descripcion" />
+    <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+    <button type="submit" class="btn btn-success">Agregar</button>
 </form>
 
 

@@ -143,7 +143,7 @@ public class TareaRepository : ITareaRepository
         return (listaDeTareasXUsuario);
     }
     public List<TareaViewModel> ListarTareasPorTablero(int idTablero){
-        var query="SELECT tarea.id AS id, id_tablero, tarea.nombre AS nombre, descripcion, id_usuario_asignado, estado, color, usuario.nombre AS usu FROM tarea INNER JOIN usuario on id_usuario_asignado=usuario.id WHERE id_tablero = @idtab;";
+        var query="SELECT tarea.id AS id, id_tablero, tarea.nombre AS nombre, descripcion, id_usuario_asignado, estado, color, usuario.nombre AS usu FROM tarea LEFT JOIN usuario on id_usuario_asignado=usuario.id WHERE id_tablero = @idtab;";
         List<TareaViewModel> listaDeTareasXTablero = new List<TareaViewModel>();
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
