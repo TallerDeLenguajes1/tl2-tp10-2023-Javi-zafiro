@@ -5,18 +5,24 @@
 <div>
     <p>Usuario: @Model.NombreDeUsuario ?</p>
 </div>
+<section class="formu">
 <form asp-controller="Usuario" asp-action="ModificarUsuario" class="form-logger">
     <input asp-for="@Model.Id" value="@Model.Id" type="hidden">
-    <label asp-for="@Model.NombreDeUsuario"></label>
-    <input asp-for="@Model.NombreDeUsuario" value="@Model.NombreDeUsuario" />
-    <span asp-validation-for="@Model.NombreDeUsuario" class="text-danger"></span>
-    <label asp-for="@Model.Tipo"></label>
-    <select asp-for="@Model.Tipo" asp-items="Html.GetEnumSelectList<TiposUsuario>()">
-        <option value="">Seleccione un estado</option>
-    </select>
-    <span asp-validation-for="@Model.Tipo" class="text-danger"></span>
+    <section class="mb-3">
+        <label asp-for="@Model.NombreDeUsuario" class="form-label"></label>
+        <input asp-for="@Model.NombreDeUsuario" class="form-control" value="@Model.NombreDeUsuario" />
+        <span asp-validation-for="@Model.NombreDeUsuario" class="text-danger"></span>
+    </section>
+    <section class="mb-3">
+        <label asp-for="@Model.Tipo" class="form-label"></label>
+        <select asp-for="@Model.Tipo" class="form-control" asp-items="Html.GetEnumSelectList<TiposUsuario>()">
+            <option value="">Seleccione un estado</option>
+        </select>
+        <span asp-validation-for="@Model.Tipo" class="text-danger"></span>
+    </section>
     <button type="submit" class="btn btn-primary">Actualizar</button>
     <a asp-controller="Usuario" asp-action="ListarUsuarios" class="btn btn-primary">Cancelar</a>
 </form>
+</section>
 
 @section Scripts{<partial name="_ValidationScriptsPartial"/>}

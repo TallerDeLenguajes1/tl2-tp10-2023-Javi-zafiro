@@ -5,18 +5,22 @@
 <div>
     <p>Vamos a cambiar el estado a la tarea: @Model.Nombre, @Model.Descripcion</p>
 </div>
+
+<section class="formu">
 <form asp-controller="Tarea" asp-action="CambiarEstado">
     <input asp-for="Id" type="hidden">
     <input asp-for="@Model.Nombre" type="hidden"/>
     <input asp-for="@Model.Descripcion" type="hidden"/>
     <input asp-for="@Model.IdTablero" type="hidden"/>
-    <label asp-for="@Model.Estado"></label>
-    <select asp-for="@Model.Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
-        <option value="">Seleccione un estado</option>
-    </select>
-    <span asp-validation-for="@Model.Estado" class="text-danger"></span>
+    <section class="mb-3">
+        <label asp-for="@Model.Estado" class="form-label"></label>
+        <select asp-for="@Model.Estado" class="form-control" asp-items="Html.GetEnumSelectList<EstadoTarea>()">
+            <option value="">Seleccione un estado</option>
+        </select>
+        <span asp-validation-for="@Model.Estado" class="text-danger"></span>
+    </section>
     <button type="submit" class="btn btn-primary">Cambiar</button>
     <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@Model.IdTablero" class="btn btn-primary">Cancelar</a>
 </form>
-
+</section>
 @section Scripts{<partial name="_ValidationScriptsPartial"/>}

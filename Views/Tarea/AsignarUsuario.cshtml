@@ -6,23 +6,27 @@
     <p>Vamos a asignar un usiario a la tarea: @Model.Nombre, @Model.Descripcion</p>
     <p>Seleccione en la lista el usuario que realizara esta tarea</p>
 </div>
+
+<section class="formu">
 <form asp-controller="Tarea" asp-action="AsignarUsuario">
     <input asp-for="Id" type="hidden">
     <input asp-for="@Model.Nombre" type="hidden"/>
     <input asp-for="@Model.Descripcion" type="hidden"/>
     <input asp-for="@Model.IdTablero" type="hidden"/>
-    <label asp-for="Usuario_asignado"></label>
-    <select asp-for="Usuario_asignado">
-        <option value="">Seleccione un Usuario</option>
-        @if(Model.Lista != null && Model.Lista.Any()) {
-            @foreach(var item in Model.Lista){
-                <option value="@item.Id">@item.NombreDeUsuario</option>
+    <section class="mb-3">
+        <label asp-for="Usuario_asignado" class="form-label"></label>
+        <select asp-for="Usuario_asignado" class="form-control">
+            <option value="">Seleccione un Usuario</option>
+            @if(Model.Lista != null && Model.Lista.Any()) {
+                @foreach(var item in Model.Lista){
+                    <option value="@item.Id">@item.NombreDeUsuario</option>
+                }
             }
-        }
-    </select>
-    <span asp-validation-for="@Model.Usuario_asignado" class="text-danger"></span>
+        </select>
+        <span asp-validation-for="@Model.Usuario_asignado" class="text-danger"></span>
+    </section>
     <button type="submit" class="btn btn-primary">Asignar</button>
     <a asp-controller="Tarea" asp-action="ListarTareasTablero" asp-route-id="@Model.IdTablero" class="btn btn-primary">Cancelar</a>
 </form>
-
+</section>
 @section Scripts{<partial name="_ValidationScriptsPartial"/>}

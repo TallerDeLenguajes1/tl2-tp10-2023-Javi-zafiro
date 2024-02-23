@@ -8,22 +8,21 @@
         @Model.MensajeError
     </div>
 }
-<section>
-    <article>
-        <form asp-controller="Login" asp-action="ComprobarUsuario" class="form-logger">
-            <section class="mb-3">
-                <label asp-for="@Model.Nombre" class="form-label"></label>
-                <input asp-for="@Model.Nombre" class="form-control">
-                <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
-            </section>
-            <section class="mb-3">
-                <label asp-for="@Model.Contrasenia" class="form-label"></label>
-                <input asp-for="@Model.Contrasenia" type="password" class="form-control">
-                <span asp-validation-for="@Model.Contrasenia" class="text-danger"></span>
-            </section>
-            <input type="submit" value="Entrar" class="btn btn-outline-info">
-        </form>
-    </article>
+<section id="loginform">
+    <form asp-controller="Login" asp-action="ComprobarUsuario" class="form-logger">
+        <fieldset>Inicie Sesion</fieldset>
+        <section class="mb-3">
+            <label asp-for="@Model.Nombre" class="form-label"></label>
+            <input asp-for="@Model.Nombre" class="form-control">
+            <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+        </section>
+        <section class="mb-3">
+            <label asp-for="@Model.Contrasenia" class="form-label"></label>
+            <input asp-for="@Model.Contrasenia" type="password" class="form-control">
+            <span asp-validation-for="@Model.Contrasenia" class="text-danger"></span>
+        </section>
+        <input id="botoniniciosesion" type="submit" value="Entrar" class="btn btn-outline-info">
+    </form>
 </section>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

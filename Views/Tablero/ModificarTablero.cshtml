@@ -5,18 +5,24 @@
 <div>
     <p>desea modificar este tablero: @Model.Nombre, @Model.Descripcion ?</p>
 </div>
+
+<section class="formu">
 <form asp-controller="Tablero" asp-action="ModificarTablero" class="form-logger">
     <input asp-for="@Model.Id" type="hidden">
     <input asp-for="@Model.IdUsuariPropietario" type="hidden"/>
-    <label asp-for="@Model.Nombre"></label>
-    <input asp-for="@Model.Nombre" />
-    <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
-    <label asp-for="@Model.Descripcion"></label>
-    <input asp-for="@Model.Descripcion" />
-    <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+    <section class="mb-3">
+        <label asp-for="@Model.Nombre" class="form-label"></label>
+        <input asp-for="@Model.Nombre" class="form-control"/>
+        <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+    </section>
+    <section class="mb-3">
+        <label asp-for="@Model.Descripcion" class="form-label"></label>
+        <input asp-for="@Model.Descripcion" class="form-control"/>
+        <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+        </section>
     <button type="submit" class="btn btn-primary" >Actualizar</button>
     <a asp-controller="Tablero" asp-action="ListarTableros" class="btn btn-primary">Cancelar</a>
 </form>
-
+</section>
 
 @section Scripts{<partial name="_ValidationScriptsPartial"/>}

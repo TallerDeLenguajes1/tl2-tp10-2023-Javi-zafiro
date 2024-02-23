@@ -3,25 +3,97 @@ html {
   font-size: 14px;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.navbar {
+  background-color: #6576b4 !important;
+  margin-bottom: 0 !important;
+}
+
+.navbar-brand {
+  color: aliceblue !important;
+  font-weight: bold !important;
+  font-size: 1.7rem !important;
+}
+
+.navbar-brand:hover, .navbar-brand:focus {
+  color: #E6F4F1 !important;
+}
+
+main {
+  background-color: #E6F4F1;
+  min-height: 84.7vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+}
+
+#loginform {
+  max-width: 50%;
+  border: 1px solid black;
+  padding: 3%;
+  border-radius: 5%;
+}
+
+#loginform fieldset {
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+#loginform input {
+  width: 100%;
+}
+
+#botoniniciosesion {
+  border: 1.5px solid #6576b4 !important;
+  color: #6576b4 !important;
+  background-color: aliceblue !important;
+}
+
+#botoniniciosesion:hover, #botoniniciosesion:focus {
+  background-color: #6576b4 !important;
+  color: aliceblue !important;
+}
+
+footer {
+  background-color: #6576b4;
+  text-align: center;
+}
+
+footer div {
+  color: aliceblue;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+/* .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
+} */
 
 html {
   position: relative;
   min-height: 100%;
 }
 
-body {
+/* body {
   margin-bottom: 60px;
   background-color:darkgray;
-}
+} */
 
 .ocultar_msj {
   display: none;
@@ -45,4 +117,11 @@ body {
 
 .Rojo{
   color: red;
+}
+
+.formu {
+  max-width: 50%;
+  border: 1px solid black;
+  padding: 3%;
+  border-radius: 5%;
 }
