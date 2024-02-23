@@ -108,15 +108,15 @@ html {
 }
 
 .Verde{
-  color: green;
+  background-color: lightgreen !important;
 }
 
 .Amarillo{
-  color: yellow;
+  background-color: rgb(248, 248, 154) !important;
 }
 
 .Rojo{
-  color: red;
+  background-color: lightcoral !important;
 }
 
 .formu {
@@ -124,4 +124,46 @@ html {
   border: 1px solid black;
   padding: 3%;
   border-radius: 5%;
+}
+
+.tab{
+  border-collapse: collapse;
+  /*border: 1px solid black;*/
+  padding: 10%;
+  text-align: center;
+  background-color: rgb(172, 212, 247);
+  width: 80%;
+  font-size: 100%;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.tab-td{
+  border-collapse: collapse;
+  border-top: 1px solid rgb(114, 113, 113);
+  border-bottom: 1px solid rgb(114, 113, 113);
+  padding: 2%;
+  width: auto;
+}
+
+.tab-btn{
+  border-collapse: collapse;
+  border-top: 1px solid rgb(114, 113, 113);
+  border-bottom: 1px solid rgb(114, 113, 113);
+  padding: 2%;
+  width: 20%;
+}
+
+.tab-tit{
+  border-collapse: collapse;
+  border-top: 1px solid rgb(114, 113, 113);
+  border-bottom: 1px solid rgb(114, 113, 113);
+  padding: 2%;
+  width: auto;
+  background-color: rgba(136, 167, 252, 0.842);
+}
+
+.btn-w{
+  text-align: center;
+  width: 100%;
+  padding: 0.5%;
 }
