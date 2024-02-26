@@ -21,6 +21,7 @@ public class CrearTareaViewModel
     [Display(Name = "Descripción de la tarea")]
     public string? Descripcion { get => descripcion; set => descripcion = value; }
     
+    [Required(ErrorMessage = "Tiene que tener un nivel de urgencia")]
     [Display(Name = "Color de la tarea")]
     public string? Color { get => color; set => color = value; }
 
